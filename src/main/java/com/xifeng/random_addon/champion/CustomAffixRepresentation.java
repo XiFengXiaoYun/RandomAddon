@@ -1,7 +1,6 @@
-package com.xifeng.apoth_addon.champion;
+package com.xifeng.random_addon.champion;
 
 import c4.champions.common.affix.IAffix;
-import c4.champions.common.affix.core.AffixCategory;
 import stanhebben.zenscript.annotations.ZenGetter;
 
 public class CustomAffixRepresentation {
@@ -19,8 +18,4 @@ public class CustomAffixRepresentation {
         return affix.getTier();
     }
 
-    @ZenGetter
-    AffixCategory getCategory() {
-        return affix.getCategory();
-    }
 }

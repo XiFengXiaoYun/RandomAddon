@@ -1,4 +1,4 @@
-package com.xifeng.apoth_addon.champion;
+package com.xifeng.random_addon.champion;
 
 import c4.champions.common.affix.AffixRegistry;
 import c4.champions.common.affix.core.AffixCategory;
@@ -8,7 +8,9 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import stanhebben.zenscript.annotations.ZenProperty;
 
-@ZenClass("mods.apothaddon.champions.AffixBuilder")
+import java.util.Map;
+
+@ZenClass("mods.ra.champions.AffixBuilder")
 @ZenRegister
 @ModOnly("champions")
 public class CustomAffixBuilder {
@@ -18,8 +20,8 @@ public class CustomAffixBuilder {
     @ZenProperty
     public int tier = 1;
 
-    @ZenProperty
-    public AffixCategory category = AffixCategory.CC;
+    //@ZenProperty
+    public AffixCategory category = AffixCategory.DEFENSE;
 
     @ZenProperty
     public Functions.canApply canApply = null;
@@ -64,7 +66,7 @@ public class CustomAffixBuilder {
     }
 
     @ZenMethod
-    public CustomAffixRepresentation register() {
+    public void register() {
         CustomAffix affix = new CustomAffix(id, category);
         affix.canApply = this.canApply;
         affix.onKnockback = this.onKnockback;
@@ -83,7 +85,7 @@ public class CustomAffixBuilder {
 
         AffixRegistry.getAffix(id);
 
-        return new CustomAffixRepresentation(affix);
+        //return new CustomAffixRepresentation(affix);
     }
 
 }
