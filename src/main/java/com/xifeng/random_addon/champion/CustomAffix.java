@@ -1,4 +1,4 @@
-package com.xifeng.apoth_addon.champion;
+package com.xifeng.random_addon.champion;
 
 import c4.champions.common.affix.IAffix;
 import c4.champions.common.affix.core.AffixBase;
@@ -18,8 +18,7 @@ import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 public class CustomAffix extends AffixBase implements IAffix {
     String identifier = null;
     int tier = 1;
-    AffixCategory category = AffixCategory.CC;
-    CustomAffixRepresentation afr = new CustomAffixRepresentation(this);
+    AffixCategory category = AffixCategory.DEFENSE;
 
     Functions.onInitialSpawn onInitialSpawn = null;
     Functions.onSpawn onSpawn = null;
@@ -34,7 +33,7 @@ public class CustomAffix extends AffixBase implements IAffix {
     Functions.onAttacked onAttacked = null;
 
     public CustomAffix(String identifier, AffixCategory category) {
-        super(identifier, AffixCategory.CC);
+        super(identifier, category);
     }
 
     @Override
@@ -50,7 +49,7 @@ public class CustomAffix extends AffixBase implements IAffix {
     @Override
     public void onInitialSpawn(EntityLiving entityLiving, IChampionship iChampionship) {
         if(onInitialSpawn != null) {
-            onInitialSpawn.handle(afr, CraftTweakerMC.getIEntityLiving(entityLiving), iChampionship);
+            onInitialSpawn.handle(CraftTweakerMC.getIEntityLiving(entityLiving));
         } else {
             super.onInitialSpawn(entityLiving, iChampionship);
         }
@@ -59,7 +58,8 @@ public class CustomAffix extends AffixBase implements IAffix {
     @Override
     public void onSpawn(EntityLiving entityLiving, IChampionship iChampionship) {
         if(onSpawn != null) {
-            onSpawn.handle(afr, CraftTweakerMC.getIEntityLiving(entityLiving), iChampionship);
+            onSpawn.handle(CraftTweakerMC.getIEntityLiving(entityLiving));
+            super.onSpawn(entityLiving, iChampionship);
         } else {
             super.onSpawn(entityLiving, iChampionship);
         }
@@ -68,7 +68,8 @@ public class CustomAffix extends AffixBase implements IAffix {
     @Override
     public void onUpdate(EntityLiving entityLiving, IChampionship iChampionship) {
         if(onUpdate != null) {
-            onUpdate.handle(afr, CraftTweakerMC.getIEntityLiving(entityLiving), iChampionship);
+            onUpdate.handle(CraftTweakerMC.getIEntityLiving(entityLiving));
+            super.onUpdate(entityLiving, iChampionship);
         } else {
             super.onUpdate(entityLiving, iChampionship);
         }
@@ -77,7 +78,7 @@ public class CustomAffix extends AffixBase implements IAffix {
     @Override
     public void onAttack(EntityLiving entityLiving, IChampionship iChampionship, EntityLivingBase entityLivingBase, DamageSource damageSource, float v, LivingAttackEvent livingAttackEvent) {
         if(onAttack != null) {
-            onAttack.handle(afr, CraftTweakerMC.getIEntityLiving(entityLiving), iChampionship, CraftTweakerMC.getIEntityLivingBase(entityLivingBase), CraftTweakerMC.getIDamageSource(damageSource), v, new MCEntityLivingAttackedEvent(livingAttackEvent));
+            onAttack.handle( CraftTweakerMC.getIEntityLiving(entityLiving), CraftTweakerMC.getIEntityLivingBase(entityLivingBase), CraftTweakerMC.getIDamageSource(damageSource), v, new MCEntityLivingAttackedEvent(livingAttackEvent));
         } else {
             super.onAttack(entityLiving, iChampionship, entityLivingBase, damageSource, v, livingAttackEvent);
         }
@@ -86,7 +87,7 @@ public class CustomAffix extends AffixBase implements IAffix {
     @Override
     public void onAttacked(EntityLiving entityLiving, IChampionship iChampionship, DamageSource damageSource, float v, LivingAttackEvent livingAttackEvent) {
         if(onAttacked != null) {
-            onAttacked.handle(afr, CraftTweakerMC.getIEntityLiving(entityLiving), iChampionship, CraftTweakerMC.getIDamageSource(damageSource), v, new MCEntityLivingAttackedEvent(livingAttackEvent));
+            onAttacked.handle(CraftTweakerMC.getIEntityLiving(entityLiving), CraftTweakerMC.getIDamageSource(damageSource), v, new MCEntityLivingAttackedEvent(livingAttackEvent));
         } else {
             super.onAttacked(entityLiving, iChampionship, damageSource, v, livingAttackEvent);
         }
@@ -95,7 +96,7 @@ public class CustomAffix extends AffixBase implements IAffix {
     @Override
     public float onHurt(EntityLiving entityLiving, IChampionship iChampionship, DamageSource damageSource, float v, float v1) {
         if(onHurt != null) {
-            return onHurt.handle(afr, CraftTweakerMC.getIEntityLiving(entityLiving), iChampionship, CraftTweakerMC.getIDamageSource(damageSource), v, v1);
+            return onHurt.handle(CraftTweakerMC.getIEntityLiving(entityLiving), CraftTweakerMC.getIDamageSource(damageSource), v, v1);
         } else {
             return super.onHurt(entityLiving, iChampionship, damageSource, v, v1);
         }
@@ -104,7 +105,7 @@ public class CustomAffix extends AffixBase implements IAffix {
     @Override
     public float onHealed(EntityLiving entityLiving, IChampionship iChampionship, float v, float v1) {
         if(onHealed != null) {
-            return onHealed.handle(afr, CraftTweakerMC.getIEntityLiving(entityLiving), iChampionship, v, v1);
+            return onHealed.handle(CraftTweakerMC.getIEntityLiving(entityLiving), v, v1);
         } else {
             return super.onHealed(entityLiving, iChampionship, v, v1);
         }
@@ -113,7 +114,7 @@ public class CustomAffix extends AffixBase implements IAffix {
     @Override
     public float onDamaged(EntityLiving entityLiving, IChampionship iChampionship, DamageSource damageSource, float v, float v1) {
         if(onDamaged != null) {
-            return onDamaged.handle(afr, CraftTweakerMC.getIEntityLiving(entityLiving), iChampionship, CraftTweakerMC.getIDamageSource(damageSource), v, v1);
+            return onDamaged.handle(CraftTweakerMC.getIEntityLiving(entityLiving), CraftTweakerMC.getIDamageSource(damageSource), v, v1);
         } else {
             return super.onDamaged(entityLiving, iChampionship, damageSource, v, v1);
         }
@@ -122,7 +123,7 @@ public class CustomAffix extends AffixBase implements IAffix {
     @Override
     public void onDeath(EntityLiving entityLiving, IChampionship iChampionship, DamageSource damageSource, LivingDeathEvent livingDeathEvent) {
         if(onDeath != null) {
-            onDeath.handle(afr, CraftTweakerMC.getIEntityLiving(entityLiving), iChampionship, CraftTweakerMC.getIDamageSource(damageSource), new MCEntityLivingDeathEvent(livingDeathEvent));
+            onDeath.handle(CraftTweakerMC.getIEntityLiving(entityLiving), CraftTweakerMC.getIDamageSource(damageSource), new MCEntityLivingDeathEvent(livingDeathEvent));
         } else {
             super.onDeath(entityLiving, iChampionship, damageSource, livingDeathEvent);
         }
@@ -131,7 +132,7 @@ public class CustomAffix extends AffixBase implements IAffix {
     @Override
     public void onKnockback(EntityLiving entityLiving, IChampionship iChampionship, LivingKnockBackEvent livingKnockBackEvent) {
         if(onKnockback != null) {
-            onKnockback.handle(afr, CraftTweakerMC.getIEntityLiving(entityLiving), iChampionship, new MCLivingKnockBackEvent(livingKnockBackEvent));
+            onKnockback.handle(CraftTweakerMC.getIEntityLiving(entityLiving), new MCLivingKnockBackEvent(livingKnockBackEvent));
         } else {
             super.onKnockback(entityLiving, iChampionship, livingKnockBackEvent);
         }
@@ -140,17 +141,12 @@ public class CustomAffix extends AffixBase implements IAffix {
     @Override
     public boolean canApply(EntityLiving entityLiving) {
         if(canApply != null) {
-            return canApply.handle(afr, CraftTweakerMC.getIEntityLiving(entityLiving));
+            return canApply.handle(CraftTweakerMC.getIEntityLiving(entityLiving));
         } else {
             return super.canApply(entityLiving);
         }
     }
-/*
-    @Override
-    public boolean isCompatibleWith(IAffix iAffix) {
-        return false;
-    }
-*/
+
     @Override
     public int getTier() {
         return tier;

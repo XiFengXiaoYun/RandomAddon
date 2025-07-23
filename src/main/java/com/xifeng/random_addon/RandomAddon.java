@@ -1,4 +1,4 @@
-package com.xifeng.apoth_addon;
+package com.xifeng.random_addon;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.VERSION, dependencies = "after:crafttweaker;after:champions")
-public class ApothAddon {
+public class RandomAddon {
 
     public static final Logger LOGGER = LogManager.getLogger(Tags.MOD_NAME);
 
