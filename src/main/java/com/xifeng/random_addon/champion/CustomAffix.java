@@ -38,7 +38,7 @@ public class CustomAffix extends AffixBase implements IAffix {
 
     @Override
     public String getIdentifier() {
-        return identifier;
+        return super.getIdentifier();
     }
 
     @Override
@@ -59,7 +59,6 @@ public class CustomAffix extends AffixBase implements IAffix {
     public void onSpawn(EntityLiving entityLiving, IChampionship iChampionship) {
         if(onSpawn != null) {
             onSpawn.handle(CraftTweakerMC.getIEntityLiving(entityLiving));
-            super.onSpawn(entityLiving, iChampionship);
         } else {
             super.onSpawn(entityLiving, iChampionship);
         }
@@ -69,7 +68,6 @@ public class CustomAffix extends AffixBase implements IAffix {
     public void onUpdate(EntityLiving entityLiving, IChampionship iChampionship) {
         if(onUpdate != null) {
             onUpdate.handle(CraftTweakerMC.getIEntityLiving(entityLiving));
-            super.onUpdate(entityLiving, iChampionship);
         } else {
             super.onUpdate(entityLiving, iChampionship);
         }
@@ -149,6 +147,6 @@ public class CustomAffix extends AffixBase implements IAffix {
 
     @Override
     public int getTier() {
-        return tier;
+        return super.getTier();
     }
 }
