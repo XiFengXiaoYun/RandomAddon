@@ -6,3 +6,4 @@
 2.Bountiful Baubles addon: more bauble modifier.
 3.Nyx addon: new lunar event.(Mabe)
 4.Trinket and Bauble addon: add new races and new baubles.
+5.Defiled land addon: crt integration for transformation

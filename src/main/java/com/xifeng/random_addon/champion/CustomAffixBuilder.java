@@ -8,8 +8,6 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import stanhebben.zenscript.annotations.ZenProperty;
 
-import java.util.Map;
-
 @ZenClass("mods.ra.champions.AffixBuilder")
 @ZenRegister
 @ModOnly("champions")
@@ -83,7 +81,7 @@ public class CustomAffixBuilder {
         affix.tier = this.tier;
         affix.category = this.category;
 
-        AffixRegistry.getAffix(id);
+        AffixRegistry.registerAffix(id, affix);
 
         //return new CustomAffixRepresentation(affix);
     }
