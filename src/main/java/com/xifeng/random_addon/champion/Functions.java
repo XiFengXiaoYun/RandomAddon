@@ -1,5 +1,7 @@
 package com.xifeng.random_addon.champion;
+/*
 
+ */
 import crafttweaker.annotations.ModOnly;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.damage.IDamageSource;
