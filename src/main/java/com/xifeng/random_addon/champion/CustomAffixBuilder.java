@@ -18,7 +18,6 @@ public class CustomAffixBuilder {
     @ZenProperty
     public int tier = 1;
 
-    //@ZenProperty
     public AffixCategory category = AffixCategory.DEFENSE;
 
     @ZenProperty

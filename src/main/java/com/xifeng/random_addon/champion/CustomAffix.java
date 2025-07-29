@@ -1,5 +1,7 @@
 package com.xifeng.random_addon.champion;
+/*
 
+ */
 import c4.champions.common.affix.IAffix;
 import c4.champions.common.affix.core.AffixBase;
 import c4.champions.common.affix.core.AffixCategory;
