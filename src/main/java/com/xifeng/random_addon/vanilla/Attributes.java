@@ -1,6 +1,7 @@
 package com.xifeng.random_addon.vanilla;
 
 
+import com.xifeng.random_addon.ModConfig;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.attributes.IAttribute;
@@ -18,10 +19,9 @@ import java.util.List;
 import java.util.Random;
 
 public class Attributes {
-    //TODO 可配置的属性最大值
-    public static final IAttribute LOOTLEVEL = new RangedAttribute(null, "ra.lootLevel", 0.0, 0.0, 10.0).setShouldWatch(true);
-    public static final IAttribute MINELUCK = new RangedAttribute(null, "ra.miningLuck", 0.0, 0.0, 10.0).setShouldWatch(true);
-    public static final IAttribute EXPBONUS = new RangedAttribute(null, "ra.expBonus", 1.0, 0.0, 10.0).setShouldWatch(true);
+    private static final IAttribute LOOTLEVEL = new RangedAttribute(null, "ra.lootLevel", 0.0, 0.0, ModConfig.Attributes.maxLooting).setShouldWatch(false);
+    public static final IAttribute MINELUCK = new RangedAttribute(null, "ra.miningLuck", 0.0, 0.0, ModConfig.Attributes.maxLuck).setShouldWatch(false);
+    private static final IAttribute EXPBONUS = new RangedAttribute(null, "ra.expBonus", 1.0, 0.0, ModConfig.Attributes.maxExpBonus).setShouldWatch(false);
 
     public static int getAmount(double level) {
         double a = level - ((int) level);
@@ -42,21 +42,18 @@ public class Attributes {
 
         @SubscribeEvent
         public static void lootEvent(LootingLevelEvent evt) {
-            if(evt.getDamageSource().getTrueSource() == null || evt.getEntity().world.isRemote) return;
+            if(evt.getDamageSource().getTrueSource() == null || !(evt.getDamageSource().getTrueSource() instanceof EntityPlayer) || evt.getEntity().world.isRemote) return;
             final Entity entity = evt.getDamageSource().getTrueSource();
-            if(entity instanceof EntityPlayer) {
-                double attributeValue = ((EntityPlayer) entity).getAttributeMap().getAttributeInstance(LOOTLEVEL).getAttributeValue();
-                int lootBonus = getAmount(attributeValue);
-                int oldLevel = evt.getLootingLevel();
-                evt.setLootingLevel(oldLevel + lootBonus);
-            }
+            double attributeValue = ((EntityPlayer) entity).getAttributeMap().getAttributeInstance(LOOTLEVEL).getAttributeValue();
+            int lootBonus = getAmount(attributeValue);
+            int oldLevel = evt.getLootingLevel();
+            evt.setLootingLevel(oldLevel + lootBonus);
         }
 
         //TODO 配置白名单
         @SubscribeEvent
         public static void mineEvent(HarvestDropsEvent evt) {
             if(evt.isSilkTouching() || evt.getWorld().isRemote || evt.getHarvester() == null || !evt.getState().getBlock().getTranslationKey().contains("ore")) return;
-            System.out.println(evt.getFortuneLevel());
             List<ItemStack> drops = evt.getDrops();
             double miningLuck = evt.getHarvester().getAttributeMap().getAttributeInstance(MINELUCK).getAttributeValue();
             Random rand = new Random();

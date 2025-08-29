@@ -1,5 +1,7 @@
 package com.xifeng.random_addon.champion;
+/*
 
+ */
 import c4.champions.common.capability.CapabilityChampionship;
 import c4.champions.common.rank.Rank;
 import c4.champions.common.util.ChampionHelper;
