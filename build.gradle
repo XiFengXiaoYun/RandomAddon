@@ -2,7 +2,6 @@
  * It is advised that you do not edit anything in the build.gradle; unless you are sure of what you are doing
  */
 import com.gtnewhorizons.retrofuturagradle.mcp.InjectTagsTask
-import net.darkhax.curseforgegradle.TaskPublishCurseForge
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.gradle.ext.Gradle
 
@@ -10,12 +9,11 @@ plugins {
     id 'java'
     id 'java-library'
     id 'maven-publish'
-    id 'org.jetbrains.gradle.plugin.idea-ext' version '1.4.1'
-    id 'com.gtnewhorizons.retrofuturagradle' version '2.0.3'
-    id 'net.darkhax.curseforgegradle' version '1.+' apply false
+    id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1.9'
+    id 'com.gtnewhorizons.retrofuturagradle' version '1.4.1'
+    id 'com.matthewprenger.cursegradle' version '1.4.0' apply false
     id 'com.modrinth.minotaur' version '2.+' apply false
-    id 'org.jetbrains.changelog' version '2.5.0'
-    id 'com.gradleup.shadow' version '9.6.+'
+    id 'org.jetbrains.changelog' version '2.2.1'
 }
 
 apply from: 'gradle/scripts/helpers.gradle'
@@ -33,7 +31,6 @@ assertSubProperties 'is_coremod', 'coremod_includes_mod', 'coremod_plugin_class_
 assertSubProperties 'use_asset_mover', 'asset_mover_version'
 
 setDefaultProperty 'use_modern_java_syntax', false, false
-setDefaultProperty 'use_jetbrains_annotations', false, false
 setDefaultProperty 'generate_sources_jar', true, false
 setDefaultProperty 'generate_javadocs_jar', true, false
 setDefaultProperty 'mapping_channel', true, 'stable'
@@ -43,8 +40,6 @@ setDefaultProperty 'minecraft_username', true, 'Developer'
 setDefaultProperty 'extra_jvm_args', false, ''
 setDefaultProperty 'extra_tweak_classes', false, ''
 setDefaultProperty 'change_minecraft_sources', false, false
-setDefaultProperty 'publish_to_curseforge', true, false
-setDefaultProperty 'mixin_connector_class', false, ''
 
 version = propertyString('mod_version')
 group = propertyString('root_package')
@@ -53,7 +48,7 @@ base {
     archivesName.set(propertyString('mod_id'))
 }
 
-tasks.decompressDecompiledSources.enabled !propertyBool('change_minecraft_sources') || !layout.buildDirectory.dir('rfg/minecraft-src').get().asFile.exists()
+tasks.decompressDecompiledSources.enabled !propertyBool('change_minecraft_sources')
 
 java {
     toolchain {
@@ -67,6 +62,11 @@ java {
     if (propertyBool('generate_javadocs_jar')) {
         withJavadocJar()
     }
+}
+
+configurations {
+    embed
+    implementation.extendsFrom(embed)
 }
 
 minecraft {
@@ -94,13 +94,9 @@ minecraft {
 
     if (propertyBool('use_tags')) {
         if (file('tags.properties').exists()) {
-            Properties props = new Properties().tap { it.load(file('tags.properties').newInputStream()); it }
+            Properties props = new Properties().tap {  it.load(file('tags.properties').newInputStream()); it }
             if (!props.isEmpty()) {
-                injectedTags.set(props.collectEntries { k, v ->
-                        def interpolated = interpolate(v)
-                        if (interpolated == null || interpolated.isEmpty()) throw new GradleException("Empty tag value found for key: $k")
-                        [(k): interpolated]
-                    })
+                injectedTags.set(props.collectEntries { k, v -> [(k): interpolate(v)] })
             }
         }
     }
@@ -114,15 +110,16 @@ repositories {
 }
 
 dependencies {
-    implementation files('libs/Apotheosis-1.12.2-1.12.5.jar')
-    implementation files('libs/base-1.12.2-3.14.0.jar')
+    implementation files('libs/!mixinbooter-10.6.jar')
     implementation files('libs/champions-1.12.2-1.0.11.10.jar')
-    implementation files('libs/ContentTweaker-1.12.2-4.10.0.jar')
     implementation files('libs/CraftTweaker2-1.12-4.1.20.700.jar')
-    implementation files('libs/Placebo-1.12.2-1.6.1.jar')
     implementation files('libs/firstaid-1.6.22.jar')
     implementation files('libs/ScalingHealth-1.12.2-1.3.42+147.jar')
     implementation files('libs/SilentLib-1.12.2-3.0.14+168.jar')
+    implementation files('libs/Mantle-1.12-1.3.3.55.jar')
+    implementation files('libs/TConstruct-1.12.2-2.13.0.183.jar')
+    implementation files('libs/conarm-1.12.2-1.2.5.10.jar')
+    implementation files('libs/Nyx-1.6.1.jar')
     if (propertyBool('use_modern_java_syntax')) {
         annotationProcessor 'com.github.bsideup.jabel:jabel-javac-plugin:1.0.0'
         // Workaround for https://github.com/bsideup/jabel/issues/174
@@ -138,18 +135,20 @@ dependencies {
             transitive = false // We only care about the 1 annotation class
         }
     }
-    if (propertyBool('use_jetbrains_annotations')) {
-        compileOnly 'org.jetbrains:annotations:26.1.0'
-    }
     if (propertyBool('use_asset_mover')) {
         implementation "com.cleanroommc:assetmover:${propertyString('asset_mover_version')}"
     }
     if (propertyBool('use_mixins')) {
         String mixin = modUtils.enableMixins("zone.rong:mixinbooter:${propertyString('mixin_booter_version')}", propertyString('mixin_refmap'))
-        implementation (mixin) {
+        api (mixin) {
             transitive = false
         }
-        annotationProcessor mixin
+        annotationProcessor 'org.ow2.asm:asm-debug-all:5.2'
+        annotationProcessor 'com.google.guava:guava:32.1.2-jre'
+        annotationProcessor 'com.google.code.gson:gson:2.8.9'
+        annotationProcessor (mixin) {
+            transitive = false
+        }
     }
     if (propertyBool('enable_junit_testing')) {
         testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
@@ -161,17 +160,14 @@ apply from: 'gradle/scripts/dependencies.gradle'
 
 // Adds Access Transformer files to tasks
 if (propertyBool('use_access_transformer')) {
-    def atFiles = propertyStringList('access_transformer_locations').collect { location ->
-        def fileLocation = file("src/main/resources/${location}")
-        if (!fileLocation.exists()) {
+    for (def location : propertyStringList('access_transformer_locations')) {
+        def fileLocation = file("${projectDir}/src/main/resources/${location}")
+        if (fileLocation.exists()) {
+            tasks.deobfuscateMergedJarToSrg.accessTransformerFiles.from(fileLocation)
+            tasks.srgifyBinpatchedJar.accessTransformerFiles.from(fileLocation)
+        } else {
             throw new GradleException("Access Transformer file [$fileLocation] does not exist!")
         }
-        return fileLocation
-    }
-
-    // Apply ATs to both Minecraft and Forge sources/runtime patched jar
-    tasks.named('applyJST').configure {
-        accessTransformerFiles.from(atFiles)
     }
 }
 
@@ -191,7 +187,7 @@ processResources {
     inputs.property 'mixin_configs', propertyStringList('mixin_configs').join(' ')
 
     def filterList = ['mcmod.info', 'pack.mcmeta']
-    filterList.addAll(propertyStringList('mixin_configs'))
+    filterList.addAll(propertyStringList('mixin_configs').collect(config -> "mixins.${config}.json" as String))
 
     filesMatching(filterList) { fcd ->
         fcd.expand(
@@ -231,16 +227,10 @@ jar {
         if (propertyBool('use_access_transformer')) {
             attribute_map['FMLAT'] = propertyString('access_transformer_locations')
         }
-        def mixinConfigs = propertyStringList('mixin_configs')
-        if (!mixinConfigs.isEmpty()) {
-            attribute_map['MixinConfigs'] = mixinConfigs.join(',')
-        }
-        def mixinConnectorClass = propertyString('mixin_connector_class')
-        if (!mixinConnectorClass.isEmpty()) {
-            attribute_map['MixinConnector'] = mixinConnectorClass
-        }
         attributes(attribute_map)
     }
+    // Add all embedded dependencies into the jar
+    from(provider{ configurations.embed.collect {it.isDirectory() ? it : zipTree(it)} })
 }
 
 idea {
@@ -250,9 +240,6 @@ idea {
     project {
         settings {
             runConfigurations {
-                "0. Setup Decomp Workspace"(Gradle) {
-                    taskNames = ["setupDecompWorkspace"]
-                }
                 "1. Run Client"(Gradle) {
                     taskNames = ["runClient"]
                 }
@@ -309,7 +296,7 @@ String parserChangelog() {
 
 tasks.register('generateMixinJson') {
     group 'cleanroom helpers'
-    def missingConfig = propertyStringList('mixin_configs').findAll(config -> !file("src/main/resources/${config}").exists())
+    def missingConfig = propertyStringList('mixin_configs').findAll(config -> !file("src/main/resources/mixins.${config}.json").exists())
     onlyIf {
         if (propertyBool('use_mixins') && propertyBool('generate_mixins_json')) {
             return !missingConfig.empty
@@ -318,7 +305,7 @@ tasks.register('generateMixinJson') {
     }
     doLast {
         for (String mixinConfig : missingConfig) {
-            def file = file("src/main/resources/${mixinConfig}")
+            def file = file("src/main/resources/mixins.${mixinConfig}.json")
             file << """{\n\t"package": "",\n\t"required": true,\n\t"refmap": "${propertyString('mixin_refmap')}",\n\t"target": "@env(DEFAULT)",\n\t"minVersion": "0.8.5",\n\t"compatibilityLevel": "JAVA_8",\n\t"mixins": [],\n\t"server": [],\n\t"client": []\n}"""
         }
     }
@@ -375,15 +362,6 @@ tasks.register('prioritizeCoremods') {
 idea.project.settings {
     taskTriggers {
         afterSync 'cleanroomAfterSync'
-    }
-}
-
-if (propertyBool('publish_to_curseforge')) {
-    assertProperty 'curseforge_project_id'
-    apply plugin: 'net.darkhax.curseforgegradle'
-    tasks.register('curseforge', TaskPublishCurseForge) {
-        group 'publishing'
-        description "Uploads CurseForge project ${propertyString('curseforge_project_id')}"
     }
 }
 
