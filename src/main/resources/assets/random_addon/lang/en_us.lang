@@ -1,3 +1,5 @@
 attribute.name.ra.lootLevel=Looting Level
-attribute.name.ra.mineLuck=Mining Lucky
+attribute.name.ra.mineLuck=Fortune Level
 attribute.name.ra.expBonus=Exp Bonus
+
+info.ra.hidden_moon=The moon is hidden, some creatures are eager for action...

@@ -1,7 +1,7 @@
 package com.xifeng.random_addon.vanilla;
 
 
-import com.xifeng.random_addon.ModConfig;
+import com.xifeng.random_addon.config.ModConfig;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Attributes {
     public static final IAttribute LOOTLEVEL = new RangedAttribute(null, "ra.lootLevel", 0.0, 0.0, ModConfig.Attributes.maxLooting).setShouldWatch(false);
-    public static final IAttribute MINELUCK = new RangedAttribute(null, "ra.fortuneLevel", 10.0, 0.0, ModConfig.Attributes.maxLuck).setShouldWatch(false);
+    public static final IAttribute FORTUNELEVEL = new RangedAttribute(null, "ra.fortuneLevel", 0.0, 0.0, ModConfig.Attributes.maxFortune).setShouldWatch(false);
     public static final IAttribute EXPBONUS = new RangedAttribute(null, "ra.expBonus", 1.0, 0.0, ModConfig.Attributes.maxExpBonus).setShouldWatch(false);
 
     public static int getAmount(double level) {
@@ -27,7 +27,7 @@ public class Attributes {
             final Entity ent = evt.getEntity();
             if (ent instanceof EntityPlayer) {
                 ((EntityPlayer) ent).getAttributeMap().registerAttribute(LOOTLEVEL);
-                ((EntityPlayer) ent).getAttributeMap().registerAttribute(MINELUCK);
+                ((EntityPlayer) ent).getAttributeMap().registerAttribute(FORTUNELEVEL);
                 ((EntityPlayer) ent).getAttributeMap().registerAttribute(EXPBONUS);
             }
         }

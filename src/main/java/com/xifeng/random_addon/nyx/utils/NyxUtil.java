@@ -1,11 +1,13 @@
 package com.xifeng.random_addon.nyx.utils;
 
-import net.minecraft.world.World;
+import com.xifeng.random_addon.nyx.DesertedMoon;
+import com.xifeng.random_addon.nyx.HiddenMoon;
+import de.ellpeck.nyx.capabilities.NyxWorld;
 
 public class NyxUtil {
-    public World world;
-    public NyxUtil(World world) {
-        this.world = world;
-        //this.lunarEvents.add(0, new HiddenMoon(this));
+
+    public static void registerLunarEvents(NyxWorld nyxWorld) {
+        nyxWorld.lunarEvents.add(0, new HiddenMoon(nyxWorld));
+        //nyxWorld.lunarEvents.add(0, new DesertedMoon(nyxWorld));
     }
 }

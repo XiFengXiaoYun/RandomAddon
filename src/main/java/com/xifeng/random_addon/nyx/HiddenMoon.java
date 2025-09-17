@@ -1,7 +1,6 @@
 package com.xifeng.random_addon.nyx;
 
-import com.xifeng.random_addon.ModConfig;
-import com.xifeng.random_addon.nyx.utils.NyxUtil;
+import com.xifeng.random_addon.config.ModConfig;
 import de.ellpeck.nyx.capabilities.NyxWorld;
 import de.ellpeck.nyx.lunarevents.LunarEvent;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,6 +11,10 @@ import net.minecraft.util.text.TextFormatting;
 
 //效果：末影人大量生成，玩家在黑暗中呆久了会受到黑暗伤害，死亡信息为“xxx被黑暗吞噬了”
 public class HiddenMoon extends LunarEvent {
+    public final int startNight = ModConfig.Nyxs.HiddenMoon.startNight;
+    public final int interval = ModConfig.Nyxs.HiddenMoon.interval;
+    public final int graceDay = ModConfig.Nyxs.HiddenMoon.graceDay;
+
     public HiddenMoon(NyxWorld nyxWorld) {
         super("hidden_moon", nyxWorld);
     }
@@ -23,8 +26,7 @@ public class HiddenMoon extends LunarEvent {
 
     @Override
     public boolean shouldStart(boolean b) {
-        //return ModConfig.Nyxs.hiddenMoon && !this.world.isDaytime();
-        return !this.world.isDaytime();
+        return ModConfig.Nyxs.HiddenMoon.enable && !this.world.isDaytime();
     }
 
     @Override
@@ -33,6 +35,13 @@ public class HiddenMoon extends LunarEvent {
     }
 
     public int getSkyColor() {
-        return ModConfig.Nyxs.color;
+        return ModConfig.Nyxs.HiddenMoon.color;
+    }
+
+    public NBTTagCompound serializeNBT() {
+        return new NBTTagCompound();
+    }
+
+    public void deserializeNBT(NBTTagCompound nbt) {
     }
 }

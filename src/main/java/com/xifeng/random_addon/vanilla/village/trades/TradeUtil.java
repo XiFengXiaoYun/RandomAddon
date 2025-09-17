@@ -5,7 +5,7 @@ import c4.conarm.lib.ArmoryRegistry;
 import c4.conarm.lib.armor.ArmorCore;
 import c4.conarm.lib.armor.ArmorPart;
 import com.google.common.collect.Lists;
-import com.xifeng.random_addon.ModConfig;
+import com.xifeng.random_addon.config.ModConfig;
 import net.minecraft.item.ItemStack;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.Material;

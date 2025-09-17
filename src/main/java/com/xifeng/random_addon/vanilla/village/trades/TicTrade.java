@@ -1,6 +1,6 @@
 package com.xifeng.random_addon.vanilla.village.trades;
 
-import com.xifeng.random_addon.ModConfig;
+import com.xifeng.random_addon.config.ModConfig;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.Items;

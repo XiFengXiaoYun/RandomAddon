@@ -15,7 +15,6 @@ public abstract class MixinBlock {
     @ModifyVariable(
             method = "harvestBlock",
             at = @At(value = "STORE", ordinal = 0, id = "i"),
-            print = true,
             remap = false
     )
     private int get(int original, World world, EntityPlayer player) {
@@ -25,7 +24,7 @@ public abstract class MixinBlock {
     @Unique
     private int newMod$getPlayerFortune(EntityPlayer player) {
         if(player != null) {
-            double level = player.getAttributeMap().getAttributeInstance(Attributes.MINELUCK).getAttributeValue();
+            double level = player.getAttributeMap().getAttributeInstance(Attributes.FORTUNELEVEL).getAttributeValue();
             return Attributes.getAmount(level);
         }
         return 0;
