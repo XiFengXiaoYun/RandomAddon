@@ -5,6 +5,7 @@ package com.xifeng.random_addon.champion;
 import c4.champions.common.capability.CapabilityChampionship;
 import c4.champions.common.rank.Rank;
 import c4.champions.common.util.ChampionHelper;
+import com.google.common.collect.ImmutableSet;
 import crafttweaker.annotations.ModOnly;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.entity.IEntityLiving;
@@ -16,7 +17,7 @@ import stanhebben.zenscript.annotations.ZenMethod;
 
 import java.util.Objects;
 
-@ZenClass("mods.ra.utils")
+@ZenClass("mods.ra.champions.utils")
 @ZenRegister
 @ModOnly("champions")
 public class Utils {
@@ -39,5 +40,15 @@ public class Utils {
             }
         }
         return 0;
+    }
+
+    @ZenMethod
+    public static String[] getAffixes(IEntityLiving living) {
+        Entity ent = CraftTweakerMC.getEntity(living);
+        if(ChampionHelper.isValidChampion(ent) && CapabilityChampionship.getChampionship((EntityLiving) ent) != null) {
+            ImmutableSet<String> affixSet = CapabilityChampionship.getChampionship((EntityLiving) ent).getAffixes();
+            return affixSet.toArray(new String[0]);
+        }
+        return new String[0];
     }
 }

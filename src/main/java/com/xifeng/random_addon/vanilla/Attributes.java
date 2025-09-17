@@ -1,7 +1,8 @@
 package com.xifeng.random_addon.vanilla;
 
 
-import com.xifeng.random_addon.ModConfig;
+import com.xifeng.random_addon.config.ModConfig;
+import de.ellpeck.nyx.capabilities.NyxWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
@@ -13,7 +14,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Attributes {
     public static final IAttribute LOOTLEVEL = new RangedAttribute(null, "ra.lootLevel", 0.0, 0.0, ModConfig.Attributes.maxLooting).setShouldWatch(false);
-    public static final IAttribute MINELUCK = new RangedAttribute(null, "ra.fortuneLevel", 10.0, 0.0, ModConfig.Attributes.maxLuck).setShouldWatch(false);
+    public static final IAttribute FORTUNELEVEL = new RangedAttribute(null, "ra.fortuneLevel", 0.0, 0.0, ModConfig.Attributes.maxFortune).setShouldWatch(false);
     public static final IAttribute EXPBONUS = new RangedAttribute(null, "ra.expBonus", 1.0, 0.0, ModConfig.Attributes.maxExpBonus).setShouldWatch(false);
 
     public static int getAmount(double level) {
@@ -27,7 +28,7 @@ public class Attributes {
             final Entity ent = evt.getEntity();
             if (ent instanceof EntityPlayer) {
                 ((EntityPlayer) ent).getAttributeMap().registerAttribute(LOOTLEVEL);
-                ((EntityPlayer) ent).getAttributeMap().registerAttribute(MINELUCK);
+                ((EntityPlayer) ent).getAttributeMap().registerAttribute(FORTUNELEVEL);
                 ((EntityPlayer) ent).getAttributeMap().registerAttribute(EXPBONUS);
             }
         }
@@ -41,10 +42,18 @@ public class Attributes {
             int lootBonus = getAmount(attributeValue);
             int oldLevel = evt.getLootingLevel();
             evt.setLootingLevel(oldLevel + lootBonus);
+            //for test
+            NyxWorld nyxWorld = NyxWorld.get(entity.world);
+            if(nyxWorld.currentEvent == null) {
+                System.out.print("current event is null");
+                return;
+            }
+            System.out.print(nyxWorld.currentEvent.name);
         }
 
         @SubscribeEvent
         public static void expEvent(LivingExperienceDropEvent evt) {
+            if(evt.getAttackingPlayer() == null) return;
             if(evt.getAttackingPlayer().world.isRemote) return;
             double expBonus = evt.getAttackingPlayer().getAttributeMap().getAttributeInstance(EXPBONUS).getAttributeValue();
             int oldExp = evt.getDroppedExperience();
