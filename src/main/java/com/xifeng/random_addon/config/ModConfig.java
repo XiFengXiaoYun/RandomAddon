@@ -22,34 +22,17 @@ public class ModConfig {
     public static Nyxs nyxs;
 
     public static class Nyxs {
-        @Config.Comment("DarkMoon setings")
-        public static DarkMoon darkMoon;
+        @Config.Comment("HiddenMoon setings")
+        public static HiddenMoon hiddenMoon;
 
-        @Config.Comment("CrescentMoon settings")
-        public static CrescentMoon crescentMoon;
-
-        public static class DarkMoon {
+        public static class HiddenMoon {
             @Config.Comment("111")
             public static boolean enable = true;
             @Config.Comment("222")
-            public static int color = 0x585858;
-            public static int startNight = 10;
-            public static int interval = 10;
+            public static int color = 0x114514;
+            public static int startNight = 0;
+            public static int interval = 0;
             public static int graceDay = 0;
-            public static double chance = 0.25;
-            public static double enderManChance = 0.875;
-        }
-
-        public static class CrescentMoon {
-            @Config.Comment("111")
-            public static boolean enable = true;
-            @Config.Comment("222")
-            public static int color = 0x8cfffb;
-            public static int startNight = 7;
-            public static int interval = 15;
-            public static int graceDay = 0;
-            public static double chance = 1.0;
-            public static double mobReduction = 0.5;
         }
     }
 
