@@ -66,8 +66,7 @@ public final class NyxEvents {
             if (list != null) {
                 MerchantRecipeList newList = NyxUtil.modifyTrade(list, 0.5f);
                 if(!world.isRemote) {
-                    //evt.setList(newList);
-                    System.out.print("I'm successful !");
+                    evt.setList(newList);
                 }
             }
         }

@@ -2,7 +2,6 @@ package com.xifeng.random_addon.vanilla;
 
 
 import com.xifeng.random_addon.config.ModConfig;
-import de.ellpeck.nyx.capabilities.NyxWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
@@ -42,13 +41,6 @@ public class Attributes {
             int lootBonus = getAmount(attributeValue);
             int oldLevel = evt.getLootingLevel();
             evt.setLootingLevel(oldLevel + lootBonus);
-            //for test
-            NyxWorld nyxWorld = NyxWorld.get(entity.world);
-            if(nyxWorld.currentEvent == null) {
-                System.out.print("current event is null");
-                return;
-            }
-            System.out.print(nyxWorld.currentEvent.name);
         }
 
         @SubscribeEvent

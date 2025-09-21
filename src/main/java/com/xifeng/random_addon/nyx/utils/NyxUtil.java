@@ -32,12 +32,12 @@ public class NyxUtil {
         MerchantRecipeList newList = new MerchantRecipeList();
         for(MerchantRecipe recipe : list) {
             NBTTagCompound nbt = recipe.writeToTags();
-            int uses = nbt.getInteger("uses");
-            int maxUses = nbt.getInteger("maxUses");
+            //int uses = nbt.getInteger("uses");
+            //int maxUses = nbt.getInteger("maxUses");
             int price = Math.max((int) (nbt.getCompoundTag("buy").getInteger("Count") * discount), 1);
             nbt.getCompoundTag("buy").setInteger("Count", price);
-            nbt.setInteger("uses", uses);
-            nbt.setInteger("maxUses", maxUses);
+            //nbt.setInteger("uses", uses);
+            //nbt.setInteger("maxUses", maxUses);
             MerchantRecipe recipe1 = new MerchantRecipe(nbt);
 
             newList.add(recipe1);
