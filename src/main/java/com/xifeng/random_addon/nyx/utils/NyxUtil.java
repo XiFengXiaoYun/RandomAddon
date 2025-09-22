@@ -1,11 +1,12 @@
 package com.xifeng.random_addon.nyx.utils;
 
-import com.xifeng.random_addon.nyx.lunarevents.*;
+import com.xifeng.random_addon.nyx.CrescentMoon;
+import com.xifeng.random_addon.nyx.DarkMoon;
 import de.ellpeck.nyx.capabilities.NyxWorld;
 import de.ellpeck.nyx.lunarevents.LunarEvent;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.village.MerchantRecipe;
+import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 
@@ -16,12 +17,7 @@ import java.util.function.Function;
 public class NyxUtil {
     public static final List<Function<NyxWorld, LunarEvent>> FACTORIES = Arrays.asList(
             DarkMoon::new,
-            CrescentMoon::new,
-            //DesertedMoon::new,
-            BlueMoon::new,
-            HunterNight::new,
-            PeacefulMoon::new,
-            MinerNight::new
+            CrescentMoon::new
     );
     public static void registerAll(NyxWorld nyx) {
         FACTORIES.forEach(f -> {
@@ -32,16 +28,21 @@ public class NyxUtil {
         });
     }
 
-    public static void setModifier(IAttributeInstance attr, AttributeModifier modifier) {
-        if(attr != null && !attr.hasModifier(modifier)) {
-            attr.applyModifier(modifier);
-        }
-    }
+    public static MerchantRecipeList modifyTrade(MerchantRecipeList list, float discount) {
+        MerchantRecipeList newList = new MerchantRecipeList();
+        for(MerchantRecipe recipe : list) {
+            NBTTagCompound nbt = recipe.writeToTags();
+            int uses = nbt.getInteger("uses");
+            int maxUses = nbt.getInteger("maxUses");
+            int price = Math.max((int) (nbt.getCompoundTag("buy").getInteger("Count") * discount), 1);
+            nbt.getCompoundTag("buy").setInteger("Count", price);
+            nbt.setInteger("uses", uses);
+            nbt.setInteger("maxUses", maxUses);
+            MerchantRecipe recipe1 = new MerchantRecipe(nbt);
 
-    public static void removeModifier(IAttributeInstance attr, AttributeModifier modifier) {
-        if(attr != null && attr.hasModifier(modifier)) {
-            attr.removeModifier(modifier);
+            newList.add(recipe1);
         }
+        return newList;
     }
 
     public static class dataManager implements INBTSerializable<NBTTagCompound> {
