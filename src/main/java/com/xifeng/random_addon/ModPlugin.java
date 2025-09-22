@@ -13,7 +13,6 @@ public class ModPlugin implements IFMLLoadingPlugin {
     private static final Map<String, BooleanSupplier> MIXIN_CONFIGS = new LinkedHashMap<>();
     static {
         addMixin("mixins.random_addon.json");
-        addMixin("mixins.ra.vanilla.json");
     }
     private static void addMixin(String mixinName) {
         MIXIN_CONFIGS.put(mixinName, ()->true);

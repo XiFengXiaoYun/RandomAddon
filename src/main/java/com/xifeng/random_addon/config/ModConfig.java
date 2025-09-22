@@ -18,21 +18,98 @@ public class ModConfig {
     public static Materials material;
 
     @Config.Name("Nyx Integration Settings")
-    @Config.Comment("Settings for nyx addon")
+    @Config.Comment("Settings for nyx's new lunar events")
     public static Nyxs nyxs;
 
     public static class Nyxs {
-        @Config.Comment("HiddenMoon setings")
-        public static HiddenMoon hiddenMoon;
+        @Config.Comment("DarkMoon setings")
+        public static DarkMoon darkMoon;
 
-        public static class HiddenMoon {
-            @Config.Comment("111")
+        @Config.Comment("CrescentMoon settings")
+        public static CrescentMoon crescentMoon;
+
+        //@Config.Comment("DesertedMoon settings")
+        //public static DesertedMoon desertedMoon;
+
+        @Config.Comment("BlueMoon settings")
+        public static BlueMoon blueMoon;
+
+        @Config.Comment("HunterNight settings")
+        public static HunterNight hunterNight;
+
+        @Config.Comment("PeacefulMoon settings")
+        public static PeacefulMoon peacefulMoon;
+
+        @Config.Comment("PeacefulMoon settings")
+        public static MinerNight minerNight;
+
+        public static class MinerNight {
             public static boolean enable = true;
-            @Config.Comment("222")
-            public static int color = 0x114514;
-            public static int startNight = 0;
-            public static int interval = 0;
+            public static int color = 0x585858;
+            public static int startNight = 10;
+            public static int interval = 15;
             public static int graceDay = 0;
+            public static double chance = 0.25;
+        }
+
+        public static class PeacefulMoon {
+            public static boolean enable = true;
+            public static int color = 0x585858;
+            public static int startNight = 10;
+            public static int interval = 15;
+            public static int graceDay = 0;
+            public static double chance = 0.25;
+        }
+
+        public static class HunterNight {
+            public static boolean enable = true;
+            public static int color = 0x585858;
+            public static int startNight = 10;
+            public static int interval = 15;
+            public static int graceDay = 0;
+            public static double chance = 0.25;
+        }
+
+        public static class BlueMoon {
+            public static boolean enable = true;
+            public static int color = 0x585858;
+            public static int startNight = 10;
+            public static int interval = 15;
+            public static int graceDay = 0;
+            public static double chance = 0.25;
+        }
+/*
+        public static class DesertedMoon {
+            public static boolean enable = true;
+            public static int color = 0x585858;
+            public static int startNight = 10;
+            public static int interval = 15;
+            public static int graceDay = 0;
+            public static double chance = 0.25;
+        }
+
+ */
+
+        public static class DarkMoon {
+            public static boolean enable = true;
+            public static int color = 0x585858;
+            public static int startNight = 10;
+            public static int interval = 10;
+            public static int graceDay = 0;
+            public static double chance = 0.25;
+            @Config.Comment("The chance that a mob will be replaced by Ender Man when the mob spawn during Dark Moon")
+            public static double enderManChance = 0.875;
+        }
+
+        public static class CrescentMoon {
+            public static boolean enable = true;
+            public static int color = 0x8cfffb;
+            public static int startNight = 7;
+            public static int interval = 15;
+            public static int graceDay = 0;
+            public static double chance = 1.0;
+            @Config.Comment("Mob spawn reduction during crescent moon")
+            public static double mobReduction = 0.5;
         }
     }
 
