@@ -1,4 +1,4 @@
-package com.xifeng.random_addon.nyx;
+package com.xifeng.random_addon.nyx.lunarevents;
 
 import com.xifeng.random_addon.config.ModConfig;
 import com.xifeng.random_addon.nyx.utils.NyxUtil;
@@ -10,26 +10,26 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 
-//新月：村民交易价格降低，刷怪减少20%
-public class CrescentMoon extends LunarEvent {
-    public final int startNight = ModConfig.Nyxs.CrescentMoon.startNight;
-    public final int interval = ModConfig.Nyxs.CrescentMoon.interval;
-    public final int graceDay = ModConfig.Nyxs.CrescentMoon.graceDay;
-    public final double chance = ModConfig.Nyxs.CrescentMoon.chance;
+//效果：造成的伤害提升，受到的伤害减少，掠夺等级增加，击败任意生物均有几率掉落绿宝石，获取的经验提升
+public class HunterNight extends LunarEvent {
+    public final int startNight = ModConfig.Nyxs.HunterNight.startNight;
+    public final int interval = ModConfig.Nyxs.HunterNight.interval;
+    public final int graceDay = ModConfig.Nyxs.HunterNight.graceDay;
+    public final double chance = ModConfig.Nyxs.HunterNight.chance;
     NyxUtil.dataManager manager = new NyxUtil.dataManager(this.nyxWorld);
 
-    public CrescentMoon(NyxWorld nyxWorld) {
-        super("crescent_moon", nyxWorld);
+    public HunterNight(NyxWorld nyxWorld) {
+        super("hunter_night", nyxWorld);
     }
 
     @Override
     public ITextComponent getStartMessage() {
-        return new TextComponentTranslation("info.ra.crescent_moon", new Object()).setStyle(new Style().setColor(TextFormatting.AQUA));
+        return new TextComponentTranslation("info.ra.hunter_night", new Object()).setStyle(new Style().setColor(TextFormatting.DARK_AQUA));
     }
 
     @Override
     public boolean shouldStart(boolean b) {
-        if(!ModConfig.Nyxs.CrescentMoon.enable) return false;
+        if(!ModConfig.Nyxs.HunterNight.enable) return false;
         return b && !NyxWorld.isDaytime(this.world) && manager.canStart(this, this.world, startNight, graceDay, interval, chance);
     }
 
@@ -39,7 +39,7 @@ public class CrescentMoon extends LunarEvent {
     }
 
     public int getSkyColor() {
-        return ModConfig.Nyxs.CrescentMoon.color;
+        return ModConfig.Nyxs.HunterNight.color;
     }
 
     public void update(boolean b) {
@@ -53,5 +53,4 @@ public class CrescentMoon extends LunarEvent {
     public void deserializeNBT(NBTTagCompound nbt) {
         manager.deserializeNBT(nbt);
     }
-
 }
