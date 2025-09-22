@@ -5,10 +5,12 @@ import com.xifeng.random_addon.config.ModConfig;
 import com.xifeng.random_addon.nyx.CrescentMoon;
 import com.xifeng.random_addon.nyx.DarkMoon;
 import com.xifeng.random_addon.nyx.utils.NyxUtil;
+import com.xifeng.random_addon.vanilla.network.SyncMerchantRecipes;
 import de.ellpeck.nyx.capabilities.NyxWorld;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.DamageSource;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
@@ -67,6 +69,8 @@ public final class NyxEvents {
                 MerchantRecipeList newList = NyxUtil.modifyTrade(list, 0.5f);
                 if(!world.isRemote) {
                     evt.setList(newList);
+                    EntityPlayerMP mp = (EntityPlayerMP) evt.getPlayer();
+                    SyncMerchantRecipes.sendTo(evt.getMerchant(), newList, mp);
                 }
             }
         }
