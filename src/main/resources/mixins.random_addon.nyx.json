@@ -1,6 +1,6 @@
 {
   "package": "com.xifeng.random_addon.mixin.nyx",
-  "required": true,
+  "required": false,
   "refmap": "mixins.random_addon.refmap.json",
   "target": "@env(DEFAULT)",
   "minVersion": "0.8.5",

@@ -1,5 +1,5 @@
 package com.xifeng.random_addon.nyx.lunarevents;
-/*
+
 import com.xifeng.random_addon.config.ModConfig;
 import com.xifeng.random_addon.nyx.utils.NyxUtil;
 import de.ellpeck.nyx.capabilities.NyxWorld;
@@ -55,5 +55,3 @@ public class DesertedMoon extends LunarEvent {
         manager.deserializeNBT(nbt);
     }
 }
-
- */

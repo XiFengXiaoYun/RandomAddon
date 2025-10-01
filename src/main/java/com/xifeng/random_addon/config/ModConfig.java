@@ -22,14 +22,17 @@ public class ModConfig {
     public static Nyxs nyxs;
 
     public static class Nyxs {
+        @Config.Comment("General setting")
+        public static boolean enable=true;
+
         @Config.Comment("DarkMoon setings")
         public static DarkMoon darkMoon;
 
         @Config.Comment("CrescentMoon settings")
         public static CrescentMoon crescentMoon;
 
-        //@Config.Comment("DesertedMoon settings")
-        //public static DesertedMoon desertedMoon;
+        @Config.Comment("DesertedMoon settings")
+        public static DesertedMoon desertedMoon;
 
         @Config.Comment("BlueMoon settings")
         public static BlueMoon blueMoon;
@@ -78,7 +81,7 @@ public class ModConfig {
             public static int graceDay = 0;
             public static double chance = 0.25;
         }
-/*
+
         public static class DesertedMoon {
             public static boolean enable = true;
             public static int color = 0x585858;
@@ -88,7 +91,6 @@ public class ModConfig {
             public static double chance = 0.25;
         }
 
- */
 
         public static class DarkMoon {
             public static boolean enable = true;

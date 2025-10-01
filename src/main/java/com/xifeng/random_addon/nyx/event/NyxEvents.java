@@ -1,10 +1,11 @@
 package com.xifeng.random_addon.nyx.event;
 
-import com.xifeng.random_addon.Tags;
 import com.xifeng.random_addon.config.ModConfig;
 import com.xifeng.random_addon.nyx.lunarevents.*;
 import com.xifeng.random_addon.nyx.utils.NyxUtil;
 import com.xifeng.random_addon.vanilla.Attributes;
+import crafttweaker.api.entity.IEntityAgeable;
+import crafttweaker.api.entity.IEntityAnimal;
 import de.ellpeck.nyx.capabilities.NyxWorld;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -13,6 +14,8 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -20,8 +23,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent;
 import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -30,7 +33,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-@Mod.EventBusSubscriber(modid = Tags.MOD_ID)
 public final class NyxEvents {
     public static DamageSource dark = new DamageSource("dark").setDamageBypassesArmor().setDifficultyScaled();
     public static AttributeModifier modifier = new AttributeModifier(UUID.fromString("b359bf93-4155-894f-f849-e51f89ae45eb"),"blue_moon", 3.0, 0);
@@ -56,9 +58,9 @@ public final class NyxEvents {
                     evt.setResult(Event.Result.DENY);
                 }
             }
-            //if(ModConfig.Nyxs.DesertedMoon.enable && nyxWorld.currentEvent instanceof DesertedMoon) {
-                //if(entity instanceof EntityAnimal) evt.setResult(Event.Result.DENY);
-            //}
+            if(ModConfig.Nyxs.DesertedMoon.enable && nyxWorld.currentEvent instanceof DesertedMoon) {
+                if(entity instanceof EntityAnimal) evt.setResult(Event.Result.DENY);
+            }
         }
         if(ModConfig.Nyxs.PeacefulMoon.enable && nyxWorld.currentEvent instanceof PeacefulMoon) {
             if(entity instanceof IMob || entity instanceof EntitySlime) evt.setResult(Event.Result.DENY);
@@ -177,13 +179,14 @@ public final class NyxEvents {
             }
         }
     }
-/*
+
     @SubscribeEvent
-    public static void onAnimalTame(PlayerInteractEvent.EntityInteract evt) {
+    public static void onAnimalTame(PlayerInteractEvent.EntityInteractSpecific evt) {
         NyxWorld nyxWorld = NyxWorld.get(evt.getWorld());
         if(nyxWorld != null && evt.getTarget() instanceof EntityTameable) {
             EntityTameable entityTameable = (EntityTameable) evt.getTarget();
-            if(ModConfig.Nyxs.DesertedMoon.enable && nyxWorld.currentEvent instanceof DesertedMoon && evt.getItemStack()) {
+            if(ModConfig.Nyxs.DesertedMoon.enable && nyxWorld.currentEvent instanceof DesertedMoon && entityTameable.isBreedingItem(evt.getItemStack())) {
+                evt.setResult(Event.Result.DENY);
                 evt.setCanceled(true);
             }
         }
@@ -195,6 +198,4 @@ public final class NyxEvents {
         NyxWorld nyxWorld = NyxWorld.get(evt.getWorld());
         if(nyxWorld != null && nyxWorld.currentEvent instanceof DesertedMoon) evt.setResult(Event.Result.DENY);
     }
-
- */
 }

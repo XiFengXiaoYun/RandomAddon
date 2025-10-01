@@ -17,7 +17,7 @@ public class NyxUtil {
     public static final List<Function<NyxWorld, LunarEvent>> FACTORIES = Arrays.asList(
             DarkMoon::new,
             CrescentMoon::new,
-            //DesertedMoon::new,
+            DesertedMoon::new,
             BlueMoon::new,
             HunterNight::new,
             PeacefulMoon::new,

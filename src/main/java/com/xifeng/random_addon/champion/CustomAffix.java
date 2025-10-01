@@ -20,7 +20,7 @@ import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 public class CustomAffix extends AffixBase implements IAffix {
     String identifier = null;
     int tier = 1;
-    AffixCategory category = AffixCategory.DEFENSE;
+    AffixCategory category;
 
     Functions.onInitialSpawn onInitialSpawn = null;
     Functions.onSpawn onSpawn = null;

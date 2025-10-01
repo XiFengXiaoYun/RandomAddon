@@ -18,7 +18,7 @@ public class CustomAffixBuilder {
     @ZenProperty
     public int tier = 1;
 
-    public AffixCategory category = AffixCategory.DEFENSE;
+    public AffixCategory category;
 
     @ZenProperty
     public Functions.canApply canApply = null;
@@ -53,13 +53,14 @@ public class CustomAffixBuilder {
     @ZenProperty
     public Functions.onUpdate onUpdate = null;
 
-    public CustomAffixBuilder(String id) {
+    public CustomAffixBuilder(String id, String cat) {
         this.id = id;
+        this.category = AffixCategory.valueOf(cat);
     }
 
     @ZenMethod
-    public static CustomAffixBuilder create(String id) {
-        return new CustomAffixBuilder(id);
+    public static CustomAffixBuilder create(String id, String cat) {
+        return new CustomAffixBuilder(id, cat);
     }
 
     @ZenMethod
@@ -82,7 +83,6 @@ public class CustomAffixBuilder {
 
         AffixRegistry.registerAffix(id, affix);
 
-        //return new CustomAffixRepresentation(affix);
     }
 
 }
