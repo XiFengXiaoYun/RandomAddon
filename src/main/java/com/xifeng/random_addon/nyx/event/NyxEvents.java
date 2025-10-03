@@ -7,6 +7,7 @@ import com.xifeng.random_addon.vanilla.Attributes;
 import crafttweaker.api.entity.IEntityAgeable;
 import crafttweaker.api.entity.IEntityAnimal;
 import de.ellpeck.nyx.capabilities.NyxWorld;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -181,15 +182,17 @@ public final class NyxEvents {
     }
 
     @SubscribeEvent
-    public static void onAnimalTame(PlayerInteractEvent.EntityInteractSpecific evt) {
-        NyxWorld nyxWorld = NyxWorld.get(evt.getWorld());
-        if(nyxWorld != null && evt.getTarget() instanceof EntityTameable) {
-            EntityTameable entityTameable = (EntityTameable) evt.getTarget();
-            if(ModConfig.Nyxs.DesertedMoon.enable && nyxWorld.currentEvent instanceof DesertedMoon && entityTameable.isBreedingItem(evt.getItemStack())) {
-                evt.setResult(Event.Result.DENY);
+    public static void babySpawn(BabyEntitySpawnEvent evt) {
+        if(evt.getCausedByPlayer() != null) {
+            NyxWorld nyxWorld = NyxWorld.get(evt.getCausedByPlayer().world);
+            if(nyxWorld != null && nyxWorld.currentEvent instanceof DesertedMoon) {
+                EntityLiving entity1 = evt.getParentA();
+                EntityLiving entity2 = evt.getParentB();
+                entity1.setHealth(entity1.getMaxHealth() * 0.5f);
+                entity2.setHealth(entity2.getHealth() * 0.5f);
                 evt.setCanceled(true);
             }
-        }
+         }
     }
 
     @SubscribeEvent
