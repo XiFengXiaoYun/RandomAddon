@@ -25,7 +25,7 @@ public class ModConfig {
         @Config.Comment("General setting")
         public static boolean enable=true;
 
-        @Config.Comment("DarkMoon setings")
+        @Config.Comment("DarkMoon settings")
         public static DarkMoon darkMoon;
 
         @Config.Comment("CrescentMoon settings")
@@ -47,71 +47,143 @@ public class ModConfig {
         public static MinerNight minerNight;
 
         public static class MinerNight {
+            @Config.Comment("Enable this lunar event")
             public static boolean enable = true;
-            public static int color = 0x585858;
-            public static int startNight = 10;
-            public static int interval = 15;
+            @Config.Comment("The color of the night")
+            public static int color = 0xfdeca6;
+            @Config.Comment("The first day this lunar event will occur")
+            public static int startNight = 7;
+            @Config.Comment("The minimum days should pass when next one occur. Overrides the chance setting if this is greater than 0")
+            public static int interval = 0;
+            @Config.Comment("The amount of days that should pass until the next one happens again")
             public static int graceDay = 0;
-            public static double chance = 0.25;
+            @Config.Comment("The chance that this lunar event will occur when all the conditions are met")
+            public static double chance = 0.125;
+            @Config.Comment("The bonus fortune level you will get during this lunar event")
+            public static int bonusFortuneLevel = 3;
+            @Config.Comment("The extra item you will get when harvest blocks during this lunar event")
+            public static String dropItem = "minecraft:diamond";
         }
 
         public static class PeacefulMoon {
+            @Config.Comment("Enable this lunar event")
             public static boolean enable = true;
-            public static int color = 0x585858;
-            public static int startNight = 10;
-            public static int interval = 15;
+            @Config.Comment("The color of the night")
+            public static int color = 0xffaec8;
+            @Config.Comment("The first day this lunar event will occur")
+            public static int startNight = 6;
+            @Config.Comment("The minimum days should pass when next one occur. Overrides the chance setting if this is greater than 0")
+            public static int interval = 0;
+            @Config.Comment("The amount of days that should pass until the next one happens again")
             public static int graceDay = 0;
-            public static double chance = 0.25;
+            @Config.Comment("The chance that this lunar event will occur when all the conditions are met")
+            public static double chance = 0.125;
+            @Config.Comment("The extra enchantment level the enchant table will get during this lunar event")
+            public static int bonusEnchantLevel = 20;
+            @Config.Comment("The extra regeneration speed")
+            public static double bonusHealSpeed = 1.0;
         }
 
         public static class HunterNight {
+            @Config.Comment("Enable this lunar event")
             public static boolean enable = true;
-            public static int color = 0x585858;
-            public static int startNight = 10;
-            public static int interval = 15;
+            @Config.Comment("The color of the night")
+            public static int color = 0xec1c24;
+            @Config.Comment("The first day this lunar event will occur")
+            public static int startNight = 5;
+            @Config.Comment("The minimum days should pass when next one occur. Overrides the chance setting if this is greater than 0")
+            public static int interval = 0;
+            @Config.Comment("The amount of days that should pass until the next one happens again")
             public static int graceDay = 0;
-            public static double chance = 0.25;
+            @Config.Comment("The chance that this lunar event will occur when all the conditions are met")
+            public static double chance = 0.125;
+            @Config.Comment("The damage reduction when player get hurt by a mob")
+            public static double damageReduction = 0.25;
+            @Config.Comment("The extra damage when player attack a mob")
+            public static double damageBonus = 0.25;
+            @Config.Comment("The extra looting level gained by a player during this lunar event")
+            public static int lootingLevelBonus = 3;
+            @Config.Comment("The extra experience gained by a player during this lunar event")
+            public static double expBonus = 1.0;
+            @Config.Comment("The extra item to be dropped when kill a mob during this lunar event")
+            public static String dropItem = "minecraft:emerald";
         }
 
         public static class BlueMoon {
+            @Config.Comment("Enable this lunar event")
             public static boolean enable = true;
-            public static int color = 0x585858;
-            public static int startNight = 10;
-            public static int interval = 15;
+            @Config.Comment("The color of the night")
+            public static int color = 0x3f48cc;
+            @Config.Comment("The first day this lunar event will occur")
+            public static int startNight = 4;
+            @Config.Comment("The minimum days should pass when next one occur. Overrides the chance setting if this is greater than 0")
+            public static int interval = 0;
+            @Config.Comment("The amount of days that should pass until the next one happens again")
             public static int graceDay = 0;
-            public static double chance = 0.25;
+            @Config.Comment("The chance that this lunar event will occur when all the conditions are met")
+            public static double chance = 0.125;
+            @Config.Comment("The extra luck a player will get during this lunar event")
+            public static int bonusLuck = 3;
         }
 
         public static class DesertedMoon {
+            @Config.Comment("Enable this lunar event")
             public static boolean enable = true;
-            public static int color = 0x585858;
-            public static int startNight = 10;
-            public static int interval = 15;
+            @Config.Comment("The color of the night")
+            public static int color = 0xb97a56;
+            @Config.Comment("The first day this lunar event will occur")
+            public static int startNight = 3;
+            @Config.Comment("The minimum days should pass when next one occur. Overrides the chance setting if this is greater than 0")
+            public static int interval = 0;
+            @Config.Comment("The amount of days that should pass until the next one happens again")
             public static int graceDay = 0;
-            public static double chance = 0.25;
+            @Config.Comment("The chance that this lunar event will occur when all the conditions are met")
+            public static double chance = 0.125;
         }
 
 
         public static class DarkMoon {
+            @Config.Comment("Enable this lunar event")
             public static boolean enable = true;
+            @Config.Comment("The color of the night")
             public static int color = 0x585858;
-            public static int startNight = 10;
-            public static int interval = 10;
+            @Config.Comment("The first day this lunar event will occur")
+            public static int startNight = 2;
+            @Config.Comment("The minimum days should pass when next one occur. Overrides the chance setting if this is greater than 0")
+            public static int interval = 0;
+            @Config.Comment("The amount of days that should pass until the next one happens again")
             public static int graceDay = 0;
-            public static double chance = 0.25;
-            @Config.Comment("The chance that a mob will be replaced by Ender Man when the mob spawn during Dark Moon")
+            @Config.Comment("The chance that this lunar event will occur when all the conditions are met")
+            public static double chance = 0.125;
+            @Config.Comment("The chance that a mob will be replaced by an EnderMan when the mob spawn during Dark Moon")
             public static double enderManChance = 0.875;
+            @Config.Comment("Player will get hurt by the darkness during this lunar event, this is the damage interval (in ticks)")
+            public static int damageInterval = 60;
+            @Config.Comment("Player will get hurt by the darkness during this lunar event, this is the maximum light level to be considered as darkness")
+            public static int lightLevel = 4;
+            @Config.Comment("The damage that a player will get when in darkness")
+            public static double darkDamage = 0.5;
         }
 
         public static class CrescentMoon {
+            @Config.Comment("Enable this lunar event")
             public static boolean enable = true;
+            @Config.Comment("The color of the night")
             public static int color = 0x8cfffb;
-            public static int startNight = 7;
-            public static int interval = 15;
+            @Config.Comment("The first day this lunar event will occur")
+            public static int startNight = 1;
+            @Config.Comment("The minimum days should pass when next one occur. Overrides the chance setting if this is greater than 0")
+            public static int interval = 0;
+            @Config.Comment("The amount of days that should pass until the next one happens again")
             public static int graceDay = 0;
-            public static double chance = 1.0;
+            @Config.Comment("The chance that this lunar event will occur when all the conditions are met")
+            public static double chance = 0.125;
             @Config.Comment("Mob spawn reduction during crescent moon")
             public static double mobReduction = 0.5;
+            @Config.Comment("The extra enchantment level the enchant table will get during this lunar event")
+            public static int bonusEnchantLevel = 10;
+            @Config.Comment("The extra regeneration speed")
+            public static double bonusHealSpeed = 0.5;
         }
     }
 
