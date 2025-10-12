@@ -10,7 +10,7 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 
-//运气加2，
+//TODO: 运气加2，开箱子有惊喜
 public class BlueMoon extends LunarEvent {
     public final int startNight = ModConfig.Nyxs.BlueMoon.startNight;
     public final int interval = ModConfig.Nyxs.BlueMoon.interval;

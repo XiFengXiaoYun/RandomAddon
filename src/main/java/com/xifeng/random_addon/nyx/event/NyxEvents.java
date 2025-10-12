@@ -179,12 +179,13 @@ public final class NyxEvents {
 
     @SubscribeEvent
     public static void onExpDrop(LivingExperienceDropEvent evt) {
-        if(evt.getAttackingPlayer() == null) return;
-        NyxWorld nyxWorld = NyxWorld.get(evt.getAttackingPlayer().world);
-        if(nyxWorld != null) {
-            if(ModConfig.Nyxs.HunterNight.enable && nyxWorld.currentEvent instanceof HunterNight) {
-                double bonus = 1.0 + ModConfig.Nyxs.HunterNight.expBonus;
-                evt.setDroppedExperience((int) (evt.getOriginalExperience() * bonus));
+        if(evt.getAttackingPlayer() != null) {
+            NyxWorld nyxWorld = NyxWorld.get(evt.getAttackingPlayer().world);
+            if (nyxWorld != null) {
+                if (ModConfig.Nyxs.HunterNight.enable && nyxWorld.currentEvent instanceof HunterNight) {
+                    double bonus = 1.0 + ModConfig.Nyxs.HunterNight.expBonus;
+                    evt.setDroppedExperience((int) (evt.getOriginalExperience() * bonus));
+                }
             }
         }
     }
