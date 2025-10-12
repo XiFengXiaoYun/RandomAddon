@@ -21,6 +21,79 @@ public class ModConfig {
     @Config.Comment("Settings for nyx's new lunar events")
     public static Nyxs nyxs;
 
+    @Config.Name("Difficulty System Settings")
+    @Config.Comment("The difficulty system include mob's adaptation, which can reduce the damage it get")
+    public static Difficulty difficulty;
+
+    public static class Difficulty {
+        @Config.Comment("Enable the difficulty system")
+        public static boolean enable = true;
+
+        @Config.Comment("Enable scaling health integration, disable this if you meet some problems or just don't want use it")
+        public static boolean enableScalingHealth = true;
+
+        @Config.Comment("Damage sources that can be adapted by a mob")
+        public static String[] damageSources = new String[] {
+                "mob",
+                "player",
+                "onFire",
+                "inFire",
+                "lava",
+                "magic"
+        };
+
+        @Config.Comment("If only damage caused by player can be adapted by a mob")
+        public static boolean onlyPlayer = true;
+
+        @Config.Comment("The minimum hits required before a mob gets adapted to the damage, the actual hits is determined by the mobs ability level")
+        public static int minHits = 3;
+
+        @Config.Comment("The maximum hits required before a mob gets adapted to the damage, the actual hits is determined by the mobs ability level")
+        public static int maxHits = 6;
+
+        @Config.Comment("The minimum damage modifier after being adapted by a mob")
+        public static float minDmgModifier = 0.5f;
+
+        @Config.Comment("The damage reduction per hit after a mob get adapted to this damage, the actual damage reduction is determined by the mob's adaptation ability")
+        public static float reduction = 0.0625f;
+
+        @Config.Comment("Mob blacklist")
+        public static String[] blackList = new String[] {
+                "minecraft:creeper"
+        };
+
+        @Config.Comment("Mob whitelist")
+        public static String[] whiteList = {
+        };
+
+        @Config.Name("Scaling Health integration Settings")
+        @Config.Comment("Control the integration with the scaling health mod")
+        public static ScalingHealth scalingHealth;
+
+        public static class ScalingHealth {
+            @Config.Comment("The max adapt level can be reached with the world difficulty increasing")
+            public static int maxAdaptLevel = 4;
+
+            @Config.Comment("Control how many world difficulty need to be increased to raise 1 level of mob's adapt level")
+            public static double adaptLevelIncreaseRate = 100;
+
+            @Config.Comment("The adapt ability is determined by WorldDifficulty / this ")
+            public static double adaptAbilityIncreaseRate = 100;
+
+            @Config.Comment("If true, disable blight mobs' adapt ability")
+            public static boolean disableBlight = true;
+        }
+
+        @Config.Name("Nyx integration Settings")
+        @Config.Comment("Control the integration with nyx mod")
+        public static NyxIntegration nyxIntegration;
+
+        public static class NyxIntegration {
+            @Config.Comment("Should mobs don't have adapt ability on crescent moon ")
+            public static boolean enable = true;
+        }
+    }
+
     public static class Nyxs {
         @Config.Comment("General setting")
         public static boolean enable=true;
