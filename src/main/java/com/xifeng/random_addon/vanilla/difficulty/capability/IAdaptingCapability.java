@@ -1,4 +1,4 @@
-package com.xifeng.random_addon.vanilla.difficulty;
+package com.xifeng.random_addon.vanilla.difficulty.capability;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
