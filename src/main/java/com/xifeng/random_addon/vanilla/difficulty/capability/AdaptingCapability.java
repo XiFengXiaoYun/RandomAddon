@@ -1,4 +1,4 @@
-package com.xifeng.random_addon.vanilla.difficulty;
+package com.xifeng.random_addon.vanilla.difficulty.capability;
 
 import com.xifeng.random_addon.config.ModConfig;
 

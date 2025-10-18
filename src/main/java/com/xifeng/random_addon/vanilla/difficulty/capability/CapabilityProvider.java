@@ -1,4 +1,4 @@
-package com.xifeng.random_addon.vanilla.difficulty;
+package com.xifeng.random_addon.vanilla.difficulty.capability;
 
 import com.xifeng.random_addon.Tags;
 import com.xifeng.random_addon.config.ModConfig;
@@ -46,7 +46,8 @@ public class CapabilityProvider implements ICapabilityProvider, INBTSerializable
 
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
-        return CAP == this.cap;
+        //return CAP == this.cap;
+        return capability == this.cap;
     }
 
     @Nullable
@@ -139,7 +140,7 @@ public class CapabilityProvider implements ICapabilityProvider, INBTSerializable
         public static void attach(AttachCapabilitiesEvent<Entity> evt) {
             if (shouldAdapt(evt.getObject())) {
                 evt.addCapability(
-                        new net.minecraft.util.ResourceLocation(Tags.MOD_ID, "adapt"),
+                        new ResourceLocation(Tags.MOD_ID, "adapt"),
                         new CapabilityProvider(new AdaptingCapability(), CAP, DEFAULT_FACING)
                 );
             }
