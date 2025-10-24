@@ -123,8 +123,7 @@ dependencies {
     implementation files('libs/AbyssalCraft-1.12.2-1.11.0.jar')
     implementation files('libs/Bountiful_Baubles-1.12.2-0.1.8.jar')
     implementation files('libs/Bubbles-2.4.9.jar')
-    implementation files('libs/QualityTools-1.0.7_for_1.12.2.jar')
-    implementation files('libs/PotionCore-1.9_for_1.12.2.jar')
+    implementation files('libs/Reskillable-1.12.2-1.13.0.jar')
     if (propertyBool('use_modern_java_syntax')) {
         annotationProcessor 'com.github.bsideup.jabel:jabel-javac-plugin:1.0.0'
         // Workaround for https://github.com/bsideup/jabel/issues/174

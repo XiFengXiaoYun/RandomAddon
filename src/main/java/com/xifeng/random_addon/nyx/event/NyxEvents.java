@@ -6,6 +6,7 @@ import com.xifeng.random_addon.nyx.utils.NyxUtil;
 import com.xifeng.random_addon.vanilla.Attributes;
 import de.ellpeck.nyx.capabilities.NyxWorld;
 import it.unimi.dsi.fastutil.objects.Object2ByteOpenHashMap;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -22,6 +23,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -49,22 +51,36 @@ public final class NyxEvents {
         return CACHE.getByte(world);
     }
 
+    private static void replaceEntity(Entity target, World world) {
+        EntityEnderman enderman = new EntityEnderman(world);
+        enderman.setPosition(target.posX, target.posY, target.posZ);
+        world.spawnEntity(enderman);
+    }
+
+    @SubscribeEvent
+    public static void onJoin(EntityJoinWorldEvent evt) {
+        if(evt.getWorld().isRemote || !ModConfig.Nyxs.DarkMoon.enable) return;
+        World world = evt.getWorld();
+        Entity entity = evt.getEntity();
+        NyxWorld nyxWorld = NyxWorld.get(world);
+        if(nyxWorld == null || world.isDaytime() || !(entity instanceof IMob)) return;
+        if(nyxWorld.currentEvent instanceof DarkMoon) {
+            if(Math.random() < ModConfig.Nyxs.DarkMoon.enderManChance) {
+                if(!(entity instanceof EntityEnderman)) {
+                    replaceEntity(entity, world);
+                    evt.setCanceled(true);
+                }
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void onSpawn(LivingSpawnEvent.CheckSpawn evt) {
         EntityLivingBase entity = evt.getEntityLiving();
         World world = evt.getWorld();
         NyxWorld nyxWorld = NyxWorld.get(world);
-        if(nyxWorld == null) return;
+        if(nyxWorld == null || world.isDaytime()) return;
         if(evt.getSpawner() == null) {
-            if(ModConfig.Nyxs.DarkMoon.enable  && nyxWorld.currentEvent instanceof DarkMoon && !world.isRemote) {
-                if(entity instanceof EntityEnderman) {
-                    evt.setResult(Event.Result.ALLOW);
-                } else if(world.rand.nextDouble() <= ModConfig.Nyxs.DarkMoon.enderManChance) {
-                    evt.setResult(Event.Result.DENY);
-                    world.spawnEntity(new EntityEnderman(world));
-                }
-            }
             if(ModConfig.Nyxs.CrescentMoon.enable && nyxWorld.currentEvent instanceof CrescentMoon ) {
                 if(Math.random() <= ModConfig.Nyxs.CrescentMoon.mobReduction) {
                     evt.setResult(Event.Result.DENY);
@@ -81,7 +97,7 @@ public final class NyxEvents {
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent evt) {
-        if(evt.phase == TickEvent.Phase.START) {
+        if(evt.phase == TickEvent.Phase.START && !evt.player.world.isDaytime()) {
             NyxWorld nyxWorld = NyxWorld.get(evt.player.world);
             if(nyxWorld == null) return;
             EntityPlayer player = evt.player;
