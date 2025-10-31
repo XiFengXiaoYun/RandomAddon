@@ -25,6 +25,24 @@ public class ModConfig {
     @Config.Comment("The difficulty system include mob's adaptation, which can reduce the damage it get")
     public static Difficulty difficulty;
 
+    @Config.Name("Reskillable Settings")
+    @Config.Comment("Settings about reskillable")
+    public static ReskillableCompact reskillabe;
+
+    public static class ReskillableCompact {
+        @Config.Comment("Set false to disable reskillable integration")
+        public static boolean enable = true;
+
+        @Config.Comment("The format is skillName:attributeModifierName:attributeAmount:operation")
+        public static String[] skillToAttribute = new String[] {
+            "reskillable.defense:generic.armor:0.25:0",
+            "reskillable.building:generic.armorToughness:0.25:0",
+            "reskillable.farming:generic.maxHealth:0.25:0",
+            "reskillable.attack:generic.attackDamage:0.25:0",
+            "reskillable.agility:generic.movementSpeed:0.01:1"
+        };
+    }
+
     public static class Difficulty {
         @Config.Comment("Enable the difficulty system")
         public static boolean enable = true;
