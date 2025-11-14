@@ -4,7 +4,7 @@ import codersafterdark.reskillable.api.event.LevelUpEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
-
+//TODO: 让技能也能提升属性
 public final class SkillUpEventHandler {
     @SubscribeEvent
     public static void onLevelUp(LevelUpEvent.Post evt) {
