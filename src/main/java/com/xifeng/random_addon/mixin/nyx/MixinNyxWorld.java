@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class MixinNyxWorld {
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    public void register(World world, CallbackInfo ci) {
+    private void register(World world, CallbackInfo ci) {
         NyxWorld nyxWorld = (NyxWorld)(Object) this;
         NyxUtil.registerAll(nyxWorld);
     }

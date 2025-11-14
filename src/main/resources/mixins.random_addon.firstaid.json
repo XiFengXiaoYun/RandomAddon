@@ -1,0 +1,13 @@
+{
+  "package": "com.xifeng.random_addon.mixin.firstaid",
+  "required": false,
+  "refmap": "mixins.random_addon.refmap.json",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8.5",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinAbstractPlayerDamageModel"
+  ],
+  "server": [],
+  "client": []
+}
