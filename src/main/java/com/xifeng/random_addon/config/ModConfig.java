@@ -33,13 +33,24 @@ public class ModConfig {
         @Config.Comment("Set false to disable reskillable integration")
         public static boolean enable = true;
 
-        @Config.Comment("The format is skillName:attributeModifierName:attributeAmount:operation")
+        @Config.Comment("Add skill-bound attribute for skills. The format is skillName:attributeName:attributeAmount:operation")
         public static String[] skillToAttribute = new String[] {
             "reskillable.defense:generic.armor:0.25:0",
             "reskillable.building:generic.armorToughness:0.25:0",
             "reskillable.farming:generic.maxHealth:0.25:0",
             "reskillable.attack:generic.attackDamage:0.25:0",
             "reskillable.agility:generic.movementSpeed:0.01:1"
+        };
+
+        @Config.Comment("Add trait-bound attribute for traits. The format is traitName:attributeName:attributeAmount:operation")
+        public static String[] traitToAttribute = new String[] {
+                "reskillable.battle_spirit:generic.attackDamage:2.0:0",
+                "reskillable.lucky_fisherman:generic.luck:1.0:0",
+                "reskillable.drop_guarantee:ra.lootLevel:1.0:0",
+                "reskillable.undershirt:generic.armor:2.0:0",
+                "reskillable.sidestep:generic.movementSpeed:0.125:2",
+                "reskillable.more_wheat:ra.expBonus:0.25:2",
+                "reskillable.obsidian_smasher:ra.fortuneLevel:1.0:0"
         };
     }
 
