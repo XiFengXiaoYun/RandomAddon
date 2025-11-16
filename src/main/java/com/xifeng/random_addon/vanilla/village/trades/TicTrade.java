@@ -1,5 +1,6 @@
 package com.xifeng.random_addon.vanilla.village.trades;
 
+import com.xifeng.random_addon.RandomAddon;
 import com.xifeng.random_addon.config.ModConfig;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager;
@@ -21,7 +22,7 @@ import java.util.Random;
 public class TicTrade {
     @SubscribeEvent
     public static void onVillagerProfessionRegistration(RegistryEvent.Register<VillagerRegistry.VillagerProfession> event) {
-        if(!ModConfig.VillagerTrade.enableTrade) return;
+        if(!RandomAddon.ticEnabled()) return;
         VillagerRegistry.VillagerProfession smith = event.getRegistry().getValue(new ResourceLocation("minecraft", "smith"));
         VillagerRegistry.VillagerProfession farmer = event.getRegistry().getValue(new ResourceLocation("minecraft", "farmer"));
         if (farmer != null) {

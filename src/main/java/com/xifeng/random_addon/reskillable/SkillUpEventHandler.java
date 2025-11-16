@@ -1,6 +1,8 @@
 package com.xifeng.random_addon.reskillable;
 
 import codersafterdark.reskillable.api.event.LevelUpEvent;
+import codersafterdark.reskillable.api.event.UnlockUnlockableEvent;
+import com.xifeng.random_addon.RandomAddon;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -13,6 +15,17 @@ public final class SkillUpEventHandler {
         int level = evt.getLevel();
         if(SkillUtils.checkSkillMatch(evt.getSkill().getKey())) {
             SkillUtils.updateModifier(player, evt.getSkill().getKey(), level);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onUnlockUnlockable(UnlockUnlockableEvent.Post evt) {
+        if(evt.getEntityPlayer() == null) return;
+        EntityPlayer player = evt.getEntityPlayer();
+        String traitName = evt.getUnlockable().getKey();
+        TraitAttributeEntry entry = SkillUtils.getFromList(RandomAddon.listTraitAttributeEntry, traitName);
+        if(entry != null) {
+            SkillUtils.putModifierForTrait(player, entry);
         }
     }
 
