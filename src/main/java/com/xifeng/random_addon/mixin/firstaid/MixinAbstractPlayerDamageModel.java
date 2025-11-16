@@ -4,8 +4,11 @@ import ichttt.mods.firstaid.FirstAid;
 import ichttt.mods.firstaid.FirstAidConfig;
 import ichttt.mods.firstaid.api.damagesystem.AbstractDamageablePart;
 import ichttt.mods.firstaid.common.damagesystem.PlayerDamageModel;
+import ichttt.mods.firstaid.common.network.MessageUpdatePart;
 import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -83,9 +86,16 @@ public abstract class MixinAbstractPlayerDamageModel {
                         }
                         if (expectedNewMaxHealth > newMaxHealth) {
                             part.setMaxHealth(maxHealth + 2);
+                            //-------------------------------------------------
                             //Ensure that all the part's health would not lose;
                             part.currentHealth = partMapToHealth.getFloat(part.part.name());
-
+                            //Mabe we have to send a packet
+                            if(!player.world.isRemote) {
+                                EntityPlayerMP playerMP = (EntityPlayerMP) player;
+                                MessageUpdatePart message = new MessageUpdatePart(part);
+                                FirstAid.NETWORKING.sendTo(message, playerMP);
+                            }
+                            //--------------------------------------------------
                             newMaxHealth += (part.getMaxHealth() - maxHealth);
                         } else if (expectedNewMaxHealth < newMaxHealth) {
                             //Here we don't need to modify the current health of the part
