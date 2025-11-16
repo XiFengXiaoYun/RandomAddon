@@ -138,9 +138,11 @@ public class SkillUtils {
                 updateModifier(player, skillName, skillLevel);
             }
             for(Unlockable unlockable : info.skill.getUnlockables()) {
-                TraitAttributeEntry entry = getFromList(RandomAddon.listTraitAttributeEntry, unlockable.getKey());
-                if (entry != null) {
-                    putModifierForTrait(player, entry);
+                if(info.isUnlocked(unlockable)) {
+                    TraitAttributeEntry entry = getFromList(RandomAddon.listTraitAttributeEntry, unlockable.getKey());
+                    if (entry != null) {
+                        putModifierForTrait(player, entry);
+                    }
                 }
             }
         }
