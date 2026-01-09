@@ -15,7 +15,6 @@ public class LateMixinLoader implements ILateMixinLoader {
 
     static {
         addMixinConfig("mixins.random_addon.nyx.json");
-        addMixinConfig("mixins.random_addon.firstaid.json");
     }
 
     private static void addMixinConfig(final String mixinConfig) {
