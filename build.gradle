@@ -125,6 +125,7 @@ dependencies {
     implementation files('libs/Bubbles-2.4.9.jar')
     implementation files('libs/Reskillable-1.12.2-1.13.0.jar')
     implementation files('libs/HydrogenationTinker(0.1.1-release).jar')
+    implementation files('libs/ercore-1.2.9.jar')
     if (propertyBool('use_modern_java_syntax')) {
         annotationProcessor 'com.github.bsideup.jabel:jabel-javac-plugin:1.0.0'
         // Workaround for https://github.com/bsideup/jabel/issues/174

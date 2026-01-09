@@ -22,8 +22,8 @@ public abstract class MixinBlock {
             method = "harvestBlock",
             at = @At(value = "STORE", ordinal = 0, id = "i"),
             require = 0,
-            remap = false
-    )
+            remap = false,
+            argsOnly = true)
     private int get(int original, World world, EntityPlayer player) {
         return Math.max((original + newMod$getPlayerFortune(player)), 0);
     }

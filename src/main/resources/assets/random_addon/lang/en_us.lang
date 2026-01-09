@@ -1,6 +1,7 @@
 attribute.name.ra.lootLevel=Looting Level
 attribute.name.ra.fortuneLevel=Fortune Level
 attribute.name.ra.expBonus=Exp Bonus
+attribute.name.ra.armorPierce=Armor Pierce
 death.attack.dark=%1$s was eaten by the darkness
 
 info.ra.dark_moon=The moon is rising, some creatures are eager for action...

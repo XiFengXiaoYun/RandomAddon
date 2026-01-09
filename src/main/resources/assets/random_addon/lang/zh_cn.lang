@@ -1,6 +1,7 @@
 attribute.name.ra.lootLevel=掠夺等级
 attribute.name.ra.fortuneLevel=时运等级
 attribute.name.ra.expBonus=经验获取
+attribute.name.ra.armorPierce=护甲穿透
 death.attack.dark=%1$s被黑暗吞噬了
 
 info.ra.dark_moon=一轮暗月正在升起，一些生物蠢蠢欲动......
