@@ -28,7 +28,7 @@ public abstract class MixinBlock {
         return Math.max((original + newMod$getPlayerFortune(player)), 0);
     }
 
-
+//TODO: use WrapOperation insteadof Redirect
     @Redirect(
             method = "harvestBlock",
             at = @At(
