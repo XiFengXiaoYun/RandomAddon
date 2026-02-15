@@ -18,6 +18,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public final class AdaptEvent {
     @SubscribeEvent
     public static void attach(AttachCapabilitiesEvent<Entity> evt) {
+        if(!ModConfig.Difficulty.enable) return;
         if (EventUtil.shouldAdapt(evt.getObject())) {
             evt.addCapability(
                     new ResourceLocation(Tags.MOD_ID, "adapt"),
@@ -28,6 +29,7 @@ public final class AdaptEvent {
 
     @SubscribeEvent
     public static void onJoinWorld(EntityJoinWorldEvent evt) {
+        if(!ModConfig.Difficulty.enable) return;
         World world = evt.getWorld();
         if(world.isRemote) return;
         if(EventUtil.shouldAdapt(evt.getEntity())) {
@@ -41,6 +43,7 @@ public final class AdaptEvent {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onHurt(LivingHurtEvent evt) {
+        if(!ModConfig.Difficulty.enable) return;
         if(evt.getSource().isDamageAbsolute()) return;
 
         if(!EventUtil.shouldAdapt(evt.getEntity())) return;

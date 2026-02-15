@@ -2,9 +2,7 @@ package com.xifeng.random_addon;
 
 import com.xifeng.random_addon.config.ModConfig;
 import com.xifeng.random_addon.nyx.event.NyxEvents;
-import com.xifeng.random_addon.reskillable.SkillUpEventHandler;
-import com.xifeng.random_addon.reskillable.SkillUtils;
-import com.xifeng.random_addon.reskillable.TraitAttributeEntry;
+import com.xifeng.random_addon.reskillable.*;
 import com.xifeng.random_addon.vanilla.Attributes;
 import com.xifeng.random_addon.vanilla.difficulty.capability.AdaptingCapability;
 import com.xifeng.random_addon.vanilla.difficulty.capability.IAdaptingCapability;
@@ -18,9 +16,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.VERSION, dependencies = "after:crafttweaker;after:champions;after:tconstruct;after:conarm;after:nyx;after:scalinghealth;after:reskillable;after:compatskills")
@@ -37,7 +32,6 @@ public class RandomAddon {
     }
 
     public static final Logger LOGGER = LogManager.getLogger(Tags.MOD_NAME);
-    public static List<TraitAttributeEntry> listTraitAttributeEntry = new ArrayList<>(12);
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -64,8 +58,8 @@ public class RandomAddon {
     public void init(FMLInitializationEvent event) {
         if(reskillableEnabled()) {
             LOGGER.info("Start init the skill config!");
-            SkillUtils.getAttributeFromConfig();
-            TraitAttributeEntry.initFromConfig(listTraitAttributeEntry);
+            AttributeRegistry.initSkillAttributes();
+            AttributeRegistry.initTraitAttributes();
         }
     }
 }
