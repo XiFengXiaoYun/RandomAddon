@@ -27,19 +27,26 @@ public class ModConfig {
 
     @Config.Name("Reskillable Settings")
     @Config.Comment("Settings about reskillable")
-    public static ReskillableCompact reskillabe;
+    public static ReskillableCompact reskillable;
 
     public static class ReskillableCompact {
         @Config.Comment("Set false to disable reskillable integration")
         public static boolean enable = true;
 
-        @Config.Comment("Add skill-bound attribute for skills. The format is skillName:attributeName:attributeAmount:operation")
+        @Config.Comment("Add skill-bound attribute for skills. The format is skillName:threshold:attributeName:attributeAmount:operation, threshold means when skillLevel % threshold == 0, then we get attribute bonus ")
         public static String[] skillToAttribute = new String[] {
-            "reskillable.defense:generic.armor:0.25:0",
-            "reskillable.building:generic.armorToughness:0.25:0",
-            "reskillable.farming:generic.maxHealth:0.25:0",
-            "reskillable.attack:generic.attackDamage:0.25:0",
-            "reskillable.agility:generic.movementSpeed:0.01:1"
+            "reskillable.defense:1:generic.armor:0.25:0",
+            "reskillable.building:1:generic.armorToughness:0.25:0",
+            "reskillable.farming:1:generic.maxHealth:0.25:0",
+            "reskillable.attack:1:generic.attackDamage:0.25:0",
+            "reskillable.agility:1:generic.movementSpeed:0.01:1"
+        };
+
+        @Config.Comment("Add skillLevel-bound attribute modifiers for skills. The format is skillName:skillLevel:attributeName:attributeAmount:operation")
+        public static String[] skillLevelToAttribute = new String[] {
+                "reskillable.defense:32:generic.armor:0.125:2",
+                "reskillable.farming:32:generic.maxHealth:0.25:2",
+                "reskillable.attack:32:generic.attackDamage:0.25:2"
         };
 
         @Config.Comment("Add trait-bound attribute for traits. The format is traitName:attributeName:attributeAmount:operation")

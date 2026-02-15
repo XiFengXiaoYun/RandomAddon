@@ -1,4 +1,4 @@
-/**
+ /**
  * It is advised that you do not edit anything in the build.gradle; unless you are sure of what you are doing
  */
 import com.gtnewhorizons.retrofuturagradle.mcp.InjectTagsTask
@@ -120,12 +120,12 @@ dependencies {
     implementation files('libs/TConstruct-1.12.2-2.13.0.183.jar')
     implementation files('libs/conarm-1.12.2-1.2.5.10.jar')
     implementation files('libs/Nyx-1.6.1.jar')
-    implementation files('libs/AbyssalCraft-1.12.2-1.11.0.jar')
-    implementation files('libs/Bountiful_Baubles-1.12.2-0.1.8.jar')
-    implementation files('libs/Bubbles-2.4.9.jar')
+    //implementation files('libs/AbyssalCraft-1.12.2-1.11.0.jar')
+    //implementation files('libs/Bountiful_Baubles-1.12.2-0.1.8.jar')
+    //implementation files('libs/Bubbles-2.4.9.jar')
     implementation files('libs/Reskillable-1.12.2-1.13.0.jar')
-    implementation files('libs/HydrogenationTinker(0.1.1-release).jar')
-    implementation files('libs/BattleCorrection-1.12.2-1.2.1.jar')
+    //implementation files('libs/HydrogenationTinker(0.1.1-release).jar')
+    //implementation files('libs/BattleCorrection-1.12.2-1.2.1.jar')
     if (propertyBool('use_modern_java_syntax')) {
         annotationProcessor 'com.github.bsideup.jabel:jabel-javac-plugin:1.0.0'
         // Workaround for https://github.com/bsideup/jabel/issues/174

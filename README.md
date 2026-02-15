@@ -14,3 +14,5 @@
 
 6.Defiled land addon: crt integration for transformation
 
+7.Abyssal craft compat: add custom trade list for 残存者
+
