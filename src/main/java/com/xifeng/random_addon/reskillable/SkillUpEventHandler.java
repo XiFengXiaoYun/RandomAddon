@@ -1,6 +1,7 @@
 package com.xifeng.random_addon.reskillable;
 
 import codersafterdark.reskillable.api.event.LevelUpEvent;
+import codersafterdark.reskillable.api.event.LockUnlockableEvent;
 import codersafterdark.reskillable.api.event.UnlockUnlockableEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -12,10 +13,16 @@ public final class SkillUpEventHandler {
         if(evt.getEntityPlayer() == null) return;
         EntityPlayer player = evt.getEntityPlayer();
         int level = evt.getLevel();
+        int oldLevel = evt.getOldLevel();
         if(SkillUtils.checkSkillMatch(evt.getSkill().getKey())) {
-            System.out.println("skill match check");
             SkillAttributeEntry skillAttributeEntry = SkillUtils.getSkillEntry(evt.getSkill().getKey());
-            SkillUtils.applyModifier(player, skillAttributeEntry, level);
+            if(level > oldLevel) {
+                SkillUtils.applyAllModifiers(player, skillAttributeEntry, level);
+            } else if(oldLevel > level) {
+                SkillUtils.removeModifier(player, skillAttributeEntry);
+                SkillUtils.applyAllModifiers(player, skillAttributeEntry, level);
+            }
+
         }
     }
 
@@ -26,7 +33,18 @@ public final class SkillUpEventHandler {
         String traitName = evt.getUnlockable().getKey();
         if(SkillUtils.checkTraitMatch(traitName)) {
             TraitAttributeEntry traitAttributeEntry = SkillUtils.getTraitEntry(traitName);
-            SkillUtils.applyModifier(player, traitAttributeEntry);
+            SkillUtils.applyTraitModifier(player, traitAttributeEntry);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onLockUnlockable(LockUnlockableEvent.Post evt) {
+        if(evt.getEntityPlayer() == null) return;
+        EntityPlayer player = evt.getEntityPlayer();
+        String traitName = evt.getUnlockable().getKey();
+        if(SkillUtils.checkTraitMatch(traitName)) {
+            TraitAttributeEntry traitAttributeEntry = SkillUtils.getTraitEntry(traitName);
+            SkillUtils.removeModifier(player, traitAttributeEntry);
         }
     }
 

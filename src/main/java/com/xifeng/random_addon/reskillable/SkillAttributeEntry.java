@@ -1,11 +1,15 @@
 package com.xifeng.random_addon.reskillable;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+
+
 import java.util.*;
 
 public class SkillAttributeEntry {
 
     private final String skillName;
-    private final Map<Integer, Attribute> attributeModifiers = new HashMap<>();
+    private final Multimap<Integer, Attribute> attributeModifiers = HashMultimap.create();
     private final List<Attribute> attributes = new ArrayList<>();
 
     public SkillAttributeEntry(String skillName) {
@@ -16,7 +20,7 @@ public class SkillAttributeEntry {
         return skillName;
     }
 
-    public Map<Integer, Attribute> getAttributeModifiers() {
+    public Multimap<Integer, Attribute> getAttributeModifiers() {
         return attributeModifiers;
     }
 

@@ -15,11 +15,11 @@ public class Attribute {
 
     public Attribute(String attributeName, int operation, double base, int threshold) {
         this.attributeName = attributeName;
-        String modifierName = attributeName + "_Modifier" + operation + base;
+        String modifierName = attributeName + "_Modifier" + operation + base + threshold;
         this.operation = operation;
         this.base = base;
         this.uuid = UUID.nameUUIDFromBytes(modifierName.getBytes(StandardCharsets.UTF_8));
-        this.attributeModifier = new AttributeModifier(uuid, modifierName, base, operation);
+        this.attributeModifier = new AttributeModifier(uuid, modifierName, base, operation).setSaved(false);
         this.threshold = threshold;
     }
 
@@ -36,7 +36,7 @@ public class Attribute {
     }
 
     public void setAmount(double amount) {
-        this.attributeModifier = new AttributeModifier(uuid, attributeName + "_Modifier", amount, operation);
+        this.attributeModifier = new AttributeModifier(uuid, attributeName + "_Modifier", amount, operation).setSaved(false);
     }
 
     public int getThreshold() {
