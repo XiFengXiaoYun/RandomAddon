@@ -29,30 +29,33 @@ public class SkillUtils {
         return AttributeRegistry.allSkillAttributes().get(skill);
     }
 
-    public static void applyModifier(EntityPlayer player, TraitAttributeEntry entry) {
+    public static void applyTraitModifier(EntityPlayer player, TraitAttributeEntry entry) {
         Multimap<String, AttributeModifier> multimap = HashMultimap.create();
         entry.getModifierMap().forEach(multimap::put);
         player.getAttributeMap().applyAttributeModifiers(multimap);
     }
 
-    public static void applyModifier(EntityPlayer player, SkillAttributeEntry entry, int level) {
+    public static void applyAllModifiers(EntityPlayer player, SkillAttributeEntry entry, int newLevel) {
         Multimap<String, AttributeModifier> multimap = HashMultimap.create();
-        if(entry.getAttributeModifiers().containsKey(level)) {
-            Attribute ra = entry.getAttributeModifiers().get(level);
-            String id = ra.getAttributeName();
-            AttributeModifier modifier = ra.getAttributeModifier();
-            multimap.put(id, modifier);
-        }
-        for(Attribute ra : entry.getAttributes()) {
-            String id = ra.getAttributeName();
-            int threshold =  ra.getThreshold();
-            if(level % threshold == 0) {
-                double newAmount = (double) level / threshold * ra.getBase();
-                ra.setAmount(newAmount);
-                multimap.put(id, ra.getAttributeModifier());
-            }
-        }
+        handleSkillLevel(multimap, entry, newLevel);
+        handleSkill(multimap, entry, newLevel);
         player.getAttributeMap().applyAttributeModifiers(multimap);
+    }
+
+    public static void removeModifier(EntityPlayer player, SkillAttributeEntry entry) {
+        Multimap<String, AttributeModifier> multimapToRemove = HashMultimap.create();
+
+        entry.getAttributeModifiers().forEach((key, value) -> multimapToRemove.put(value.getAttributeName(), value.getAttributeModifier()));
+
+        entry.getAttributes().forEach(attribute -> multimapToRemove.put(attribute.getAttributeName(), attribute.getAttributeModifier()));
+
+        player.getAttributeMap().removeAttributeModifiers(multimapToRemove);
+    }
+
+    public static void removeModifier(EntityPlayer player, TraitAttributeEntry entry) {
+        Multimap<String, AttributeModifier> multimap = HashMultimap.create();
+        entry.getModifierMap().forEach(multimap::put);
+        player.getAttributeMap().removeAttributeModifiers(multimap);
     }
 
     //玩家登录或重生时，更新玩家的属性修饰符
@@ -62,13 +65,33 @@ public class SkillUtils {
         for (PlayerSkillInfo info : infos) {
             SkillAttributeEntry skill = getSkillEntry(info.skill.getKey());
             if (skill != null) {
-                applyModifier(player, skill, info.getLevel());
+                applyAllModifiers(player, skill, info.getLevel());
             }
             for (Unlockable unlockable : info.skill.getUnlockables()) {
                 TraitAttributeEntry trait = getTraitEntry(unlockable.getName());
                 if (trait != null && info.isUnlocked(unlockable)) {
-                    applyModifier(player, trait);
+                    applyTraitModifier(player, trait);
                 }
+            }
+        }
+    }
+
+    private static void handleSkillLevel(Multimap<String, AttributeModifier> multimap, SkillAttributeEntry entry, int level) {
+        entry.getAttributeModifiers().forEach((key, value) -> {
+            String id = value.getAttributeName();
+            AttributeModifier modifier = value.getAttributeModifier();
+            if(level >= key) multimap.put(id, modifier);
+        });
+    }
+
+    private static void handleSkill(Multimap<String, AttributeModifier> multimap, SkillAttributeEntry entry, int level) {
+        for(Attribute a : entry.getAttributes()) {
+            String id = a.getAttributeName();
+            int threshold =  a.getThreshold();
+            if(level % threshold == 0) {
+                double newAmount = (double) level / threshold * a.getBase();
+                a.setAmount(newAmount);
+                multimap.put(id, a.getAttributeModifier());
             }
         }
     }
