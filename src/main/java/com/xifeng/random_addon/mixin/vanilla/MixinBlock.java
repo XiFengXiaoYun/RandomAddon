@@ -1,35 +1,22 @@
 package com.xifeng.random_addon.mixin.vanilla;
 
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.xifeng.random_addon.vanilla.Attributes;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(value = Block.class, priority = 100)
+@Mixin(value = Block.class)
 public abstract class MixinBlock {
 
-    @ModifyVariable(
-            method = "harvestBlock",
-            at = @At(value = "STORE", ordinal = 0, id = "i"),
-            require = 0,
-            remap = false,
-            argsOnly = true)
-    private int get(int original, World world, EntityPlayer player) {
-        return Math.max((original + newMod$getPlayerFortune(player)), 0);
-    }
-
-//TODO: use WrapOperation insteadof Redirect
-    @Redirect(
+    @WrapOperation(
             method = "harvestBlock",
             at = @At(
                     value = "INVOKE",
@@ -43,9 +30,9 @@ public abstract class MixinBlock {
             require = 0,
             remap = false
     )
-    private int get(Enchantment ench, ItemStack stack, World world, EntityPlayer player) {
-        int level =  EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack) + newMod$getPlayerFortune(player);
-        return Math.max(level, 0);
+    private int getFortuneLevel(Enchantment ench, ItemStack stack, Operation<Integer> original, World world, EntityPlayer player) {
+        int originalLevel = original.call(ench, stack);
+        return Math.max(originalLevel + newMod$getPlayerFortune(player), 0);
     }
 
     @Unique
