@@ -27,8 +27,7 @@ public abstract class MixinBlock {
                             + ")I",
                     ordinal = 1
             ),
-            require = 0,
-            remap = false
+            require = 0
     )
     private int getFortuneLevel(Enchantment ench, ItemStack stack, Operation<Integer> original, World world, EntityPlayer player) {
         int originalLevel = original.call(ench, stack);
