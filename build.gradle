@@ -128,6 +128,12 @@ dependencies {
     implementation files('libs/Reskillable-1.12.2-1.13.0.jar')
     //implementation files('libs/HydrogenationTinker(0.1.1-release).jar')
     //implementation files('libs/BattleCorrection-1.12.2-1.2.1.jar')
+    implementation files('libs/ArtemisLib-1.12.2-v1.0.6.jar')
+    implementation files('libs/LibraryEx-1.12.2-1.2.2.jar')
+    implementation files('libs/Nether Ex [New Fantasy Edition].jar')
+    implementation files('libs/AquaAcrobatics-1.15.4.jar')
+    implementation files('libs/memory_repo/com/electronwill/night-config/core/3.6.0/core-3.6.0.jar')
+    implementation files('libs/memory_repo/com/electronwill/night-config/json/3.6.0/json-3.6.0.jar')
     if (propertyBool('use_modern_java_syntax')) {
         annotationProcessor 'com.github.bsideup.jabel:jabel-javac-plugin:1.0.0'
         // Workaround for https://github.com/bsideup/jabel/issues/174
