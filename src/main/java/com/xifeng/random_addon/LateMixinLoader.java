@@ -1,5 +1,6 @@
 package com.xifeng.random_addon;
 
+import net.minecraftforge.fml.common.Loader;
 import zone.rong.mixinbooter.ILateMixinLoader;
 
 import java.util.*;
@@ -14,12 +15,11 @@ public class LateMixinLoader implements ILateMixinLoader {
     }
 
     static {
-        addMixinConfig("mixins.random_addon.nyx.json");
-        addMixinConfig("mixins.random_addon.lycanitesmobs.json");
-        addMixinConfig("mixins.random_addon.netherex.json");
+        addMixinConfig("mixins.random_addon.nyx.json", "nyx");
     }
 
-    private static void addMixinConfig(final String mixinConfig) {
-        MIXIN_CONFIGS.put(mixinConfig, () -> true);
+    private static void addMixinConfig(final String mixinConfig, String mod) {
+        MIXIN_CONFIGS.put(mixinConfig, () -> Loader.isModLoaded(mod));
+        RandomAddon.LOGGER.info("Loaded mod " + mod + " for mixin " + mixinConfig);
     }
 }
