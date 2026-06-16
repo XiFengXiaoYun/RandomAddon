@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -20,6 +21,7 @@ public class Attributes {
     public static final IAttribute FORTUNELEVEL = new RangedAttribute(null, "ra.fortuneLevel", 0.0, 0.0, ModConfig.Attributes.maxFortune).setShouldWatch(false);
     private static final IAttribute EXPBONUS = new RangedAttribute(null, "ra.expBonus", 1.0, 0.0, ModConfig.Attributes.maxExpBonus).setShouldWatch(false);
     private static final IAttribute ARMORPIERCE = new RangedAttribute(null, "ra.armorPierce", 0.0, 0.0, 1.0).setShouldWatch(false);
+    private static final IAttribute ARROWDMG = new RangedAttribute(null, "ra.arrowDamage", 0.0, 0.0, 114514.0).setShouldWatch(false);
 
     public static int getAmount(double level) {
         double a = level - ((int) level);
@@ -36,6 +38,7 @@ public class Attributes {
                 player.getAttributeMap().registerAttribute(FORTUNELEVEL);
                 player.getAttributeMap().registerAttribute(EXPBONUS);
                 player.getAttributeMap().registerAttribute(ARMORPIERCE);
+                player.getAttributeMap().registerAttribute(ARROWDMG);
             }
         }
 
@@ -71,6 +74,16 @@ public class Attributes {
                 evt.getEntityLiving().lastDamage = 0;
                 evt.getEntityLiving().attackEntityFrom(DamageSource.causePlayerDamage(player).setDamageBypassesArmor(), (float) (oldAmount * armorPierce));
             }
+        }
+
+        @SubscribeEvent
+        public static void arrowAttack(LivingHurtEvent event) {
+            if (!(event.getSource().getTrueSource() instanceof EntityPlayer) || !(event.getSource().getImmediateSource() instanceof EntityArrow)) return;
+            EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
+            double damage = player.getAttributeMap().getAttributeInstance(ARROWDMG).getAttributeValue();
+            if (damage <= 0.0) return;
+            float amount = event.getAmount();
+            event.setAmount((float) (amount + damage));
         }
     }
 }
