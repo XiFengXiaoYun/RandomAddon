@@ -13,77 +13,77 @@ import crafttweaker.api.event.LivingKnockBackEvent;
 import stanhebben.zenscript.annotations.ZenClass;
 
 public class Functions {
-    @ZenClass("mods.ra.champions.affix.onInitialSpawn")
+    @ZenClass("mods.ra.champions.affix.OnInitialSpawn")
     @ZenRegister
     @ModOnly("champions")
     public interface onInitialSpawn {
         void handle(IEntityLiving living);
     }
 
-    @ZenClass("mods.ra.champions.affix.onSpawn")
+    @ZenClass("mods.ra.champions.affix.OnSpawn")
     @ZenRegister
     @ModOnly("champions")
     public interface onSpawn {
         void handle(IEntityLiving living);
     }
 
-    @ZenClass("mods.ra.champions.affix.onUpdate")
+    @ZenClass("mods.ra.champions.affix.OnUpdate")
     @ZenRegister
     @ModOnly("champions")
     public interface onUpdate {
         void handle(IEntityLiving living);
     }
 
-    @ZenClass("mods.ra.champions.affix.onAttack")
+    @ZenClass("mods.ra.champions.affix.OnAttack")
     @ZenRegister
     @ModOnly("champions")
     public interface onAttack {
         void handle(IEntityLiving living, IEntityLivingBase livingBase, IDamageSource source, float dmg, EntityLivingAttackedEvent evt);
     }
 
-    @ZenClass("mods.ra.champions.affix.onAttacked")
+    @ZenClass("mods.ra.champions.affix.OnAttacked")
     @ZenRegister
     @ModOnly("champions")
     public interface  onAttacked {
         void handle(IEntityLiving living, IDamageSource source, float dmg, EntityLivingAttackedEvent evt);
     }
 
-    @ZenClass("mods.ra.champions.affix.onHurt")
+    @ZenClass("mods.ra.champions.affix.OnHurt")
     @ZenRegister
     @ModOnly("champions")
     public interface onHurt {
         float handle(IEntityLiving living, IDamageSource source, float dmg, float newDmg);
     }
 
-    @ZenClass("mods.ra.champions.affix.onHealed")
+    @ZenClass("mods.ra.champions.affix.OnHealed")
     @ZenRegister
     @ModOnly("champions")
     public interface onHealed {
         float handle(IEntityLiving living, float amount, float newAmount);
     }
 
-    @ZenClass("mods.ra.champions.affix.onDamaged")
+    @ZenClass("mods.ra.champions.affix.OnDamaged")
     @ZenRegister
     @ModOnly("champions")
     public interface onDamaged {
         float handle(IEntityLiving living, IDamageSource source, float dmg, float newDmg);
     }
 
-    @ZenClass("mods.ra.champions.affix.onDeath")
+    @ZenClass("mods.ra.champions.affix.OnDeath")
     @ZenRegister
     @ModOnly("champions")
     public interface onDeath {
         void handle(IEntityLiving living, IDamageSource source, EntityLivingDeathEvent evt);
     }
 
-    @ZenClass("mods.ra.champions.affix.onKnockback")
+    @ZenClass("mods.ra.champions.affix.OnKnockback")
     @ZenRegister
     @ModOnly("champions")
     public interface onKnockback {
         void handle(IEntityLiving living, LivingKnockBackEvent evt);
     }
 
-    @ZenClass("mods.ra.champions.affix.canApply")
+    @ZenClass("mods.ra.champions.affix.CanApply")
     @ZenRegister
     @ModOnly("champions")
     public interface canApply {
