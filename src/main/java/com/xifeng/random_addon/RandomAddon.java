@@ -1,5 +1,6 @@
 package com.xifeng.random_addon;
 
+import com.xifeng.random_addon.champion.Event;
 import com.xifeng.random_addon.config.ModConfig;
 import com.xifeng.random_addon.nyx.event.NyxEvents;
 import com.xifeng.random_addon.reskillable.*;
@@ -49,6 +50,10 @@ public class RandomAddon {
         if(reskillableEnabled()) {
             MinecraftForge.EVENT_BUS.register(SkillUpEventHandler.class);
             LOGGER.info("Reskillable module start!");
+        }
+
+        if(Loader.isModLoaded("champions")) {
+            MinecraftForge.EVENT_BUS.register(Event.class);
         }
 
         MinecraftForge.EVENT_BUS.register(Attributes.Events.class);
