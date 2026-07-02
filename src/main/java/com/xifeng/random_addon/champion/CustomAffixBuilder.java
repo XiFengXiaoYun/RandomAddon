@@ -53,6 +53,9 @@ public class CustomAffixBuilder {
     @ZenProperty
     public Functions.onUpdate onUpdate = null;
 
+    @ZenProperty
+    public Functions.calcDamage calcDamage = null;
+
     public CustomAffixBuilder(String id, String cat) {
         this.id = id;
         this.category = AffixCategory.valueOf(cat);
@@ -77,6 +80,7 @@ public class CustomAffixBuilder {
         affix.onUpdate = this.onUpdate;
         affix.onSpawn = this.onSpawn;
         affix.onInitialSpawn = this.onInitialSpawn;
+        affix.calcDamage = this.calcDamage;
         affix.identifier = this.id;
         affix.tier = this.tier;
         affix.category = this.category;

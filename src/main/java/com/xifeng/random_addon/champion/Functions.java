@@ -41,6 +41,13 @@ public class Functions {
         void handle(IEntityLiving living, IEntityLivingBase livingBase, IDamageSource source, float dmg, EntityLivingAttackedEvent evt);
     }
 
+    @ZenClass("mods.ra.champions.affix.CalcDamage")
+    @ZenRegister
+    @ModOnly("champions")
+    public interface calcDamage {
+        float handle(IEntityLiving living, IEntityLivingBase livingBase, IDamageSource source, float oldDmg, float newDmg);
+    }
+
     @ZenClass("mods.ra.champions.affix.OnAttacked")
     @ZenRegister
     @ModOnly("champions")

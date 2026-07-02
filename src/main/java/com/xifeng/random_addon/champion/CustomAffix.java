@@ -33,6 +33,7 @@ public class CustomAffix extends AffixBase implements IAffix {
     Functions.onHurt onHurt = null;
     Functions.canApply canApply = null;
     Functions.onAttacked onAttacked = null;
+    Functions.calcDamage calcDamage = null;
 
     public CustomAffix(String identifier, AffixCategory category) {
         super(identifier, category);
@@ -145,6 +146,13 @@ public class CustomAffix extends AffixBase implements IAffix {
         } else {
             return super.canApply(entityLiving);
         }
+    }
+
+    public float calcDamage(EntityLiving attacker, EntityLivingBase target, DamageSource damageSource, float oldDmg, float newDmg) {
+        if(calcDamage != null) {
+            return calcDamage.handle(CraftTweakerMC.getIEntityLiving(attacker), CraftTweakerMC.getIEntityLivingBase(target), CraftTweakerMC.getIDamageSource(damageSource), oldDmg, newDmg);
+        }
+        return newDmg;
     }
 
     @Override
