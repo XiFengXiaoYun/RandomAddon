@@ -7,6 +7,8 @@ import crafttweaker.api.event.IPlayerEvent;
 import crafttweaker.api.player.IPlayer;
 import crafttweaker.api.world.IBlockPos;
 import crafttweaker.api.world.IWorld;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenGetter;
 import stanhebben.zenscript.annotations.ZenMethod;
@@ -35,15 +37,15 @@ public interface ITradeOfferEvent extends IPlayerEvent {
 
     @ZenGetter("tradeList")
     @ZenMethod
-    //@SideOnly(Side.SERVER)
+    @SideOnly(Side.SERVER)
     List<IMerchantRecipe> getTradeList();
 
-    //@ZenMethod
-    //void setTradeList(IData list);
+    @ZenMethod
+    void setTradeList(IData list);
 
-    //@ZenMethod
-    //void addTrade(IMerchantRecipe recipe);
+    @ZenMethod
+    void addTrade(IMerchantRecipe recipe);
 
-    //@ZenMethod
-    //void setTrade(int index, IMerchantRecipe recipe);
+    @ZenMethod
+    void setTrade(int index, IMerchantRecipe recipe);
 }

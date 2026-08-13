@@ -7,9 +7,9 @@ import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.api.player.IPlayer;
 import crafttweaker.api.world.IBlockPos;
 import crafttweaker.api.world.IWorld;
-//import net.minecraft.item.ItemStack;
-//import net.minecraft.village.MerchantRecipe;
-//import net.minecraft.village.MerchantRecipeList;
+import net.minecraft.item.ItemStack;
+import net.minecraft.village.MerchantRecipe;
+import net.minecraft.village.MerchantRecipeList;
 import net.minecraftforge.event.village.MerchantTradeOffersEvent;
 import stanhebben.zenscript.annotations.ZenClass;
 
@@ -57,7 +57,7 @@ public class TradeOfferEvent implements ITradeOfferEvent {
             return null;
         }
     }
-/*
+
     @Override
     public void setTradeList(IData list) {
         evt.setList(new MerchantRecipeList(CraftTweakerMC.getNBTCompound(list)));
@@ -82,6 +82,4 @@ public class TradeOfferEvent implements ITradeOfferEvent {
             evt.getList().set(index, new MerchantRecipe(ibuy1, ibuy2, isell, recipe.getToolUses(), recipe.getMaxTradeUses()));
         }
     }
-
- */
 }
