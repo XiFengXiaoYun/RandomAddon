@@ -134,6 +134,9 @@ public class ModConfig {
         @Config.Comment("General setting")
         public static boolean enable=true;
 
+        @Config.Comment("Set false to disable the integration with Raids Backport mod")
+        public static boolean raidsCompat = true;
+
         @Config.Comment("DarkMoon settings")
         public static DarkMoon darkMoon;
 

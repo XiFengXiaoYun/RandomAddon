@@ -138,7 +138,7 @@ dependencies {
     //implementation files('libs/Bubbles-2.4.9.jar')
     implementation files('libs/Reskillable-1.12.2-1.13.0.jar')
     //implementation files('libs/HydrogenationTinker(0.1.1-release).jar')
-    //implementation files('libs/BattleCorrection-1.12.2-1.2.1.jar')
+    implementation files('libs/Raids-Backport-1.12.2-1.1.5b.jar')
     implementation files('libs/ArtemisLib-1.12.2-v1.0.6.jar')
     implementation files('libs/LibraryEx-1.12.2-1.2.2.jar')
     implementation files('libs/Nether Ex [New Fantasy Edition].jar')

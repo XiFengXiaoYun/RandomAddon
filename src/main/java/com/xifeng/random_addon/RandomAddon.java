@@ -31,6 +31,9 @@ public class RandomAddon {
     public static boolean ticEnabled() {
         return ModConfig.VillagerTrade.enableTrade && Loader.isModLoaded("tconstruct") && Loader.isModLoaded("conarm");
     }
+    private static boolean raidsEnabled() {
+        return ModConfig.Nyxs.raidsCompat && Loader.isModLoaded("raids") && nyxEnabled();
+    }
 
     public static final Logger LOGGER = LogManager.getLogger(Tags.MOD_NAME);
 
