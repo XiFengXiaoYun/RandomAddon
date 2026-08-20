@@ -55,6 +55,7 @@ public class Attributes {
 
         @SubscribeEvent
         public static void expEvent(LivingExperienceDropEvent evt) {
+            if(evt.getAttackingPlayer() == null) return;
             if(evt.getAttackingPlayer().world.isRemote) return;
             double expBonus = evt.getAttackingPlayer().getAttributeMap().getAttributeInstance(EXPBONUS).getAttributeValue();
             int oldExp = evt.getDroppedExperience();
