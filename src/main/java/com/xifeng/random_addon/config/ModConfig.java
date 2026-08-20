@@ -296,6 +296,8 @@ public class ModConfig {
             public static int bonusEnchantLevel = 10;
             @Config.Comment("The extra regeneration speed")
             public static double bonusHealSpeed = 0.5;
+            @Config.Comment("The discount of villager trade during this event")
+            public static double discount = 0.5;
         }
     }
 
